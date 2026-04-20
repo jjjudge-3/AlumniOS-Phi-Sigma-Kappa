@@ -1,0 +1,532 @@
+Full Name,First Name,Last Name,College,Earliest Year,Latest Year,Positions Held,All Years on Composite,Contact Linkedin Url,Job Title,Company Name,Location,Work Email,company linkedin URL,company website,Enriched Person JSON
+Cody Prudhomme,Cody,Prudhomme,University of Massachusetts Amherst,2013-2014,2015-2016,"President, Secretary, Sentinel","2013-2014, 2014-2015, 2015-2016",https://www.linkedin.com/in/cody-prudhomme-0000ba98,Account Director - Healthcare Technology,Salesforce,"Boston, Massachusetts, United States",cprudhomme@salesforce.com,https://www.linkedin.com/company/salesforce,salesforce.com,"{
+  ""dob"": null,
+  ""org"": ""Salesforce"",
+  ""url"": ""https://www.linkedin.com/in/cody-prudhomme-0000ba98"",
+  ""name"": ""Cody Prudhomme"",
+  ""slug"": ""cody-prudhomme-0000ba98"",
+  ""title"": ""Account Director - Healthcare Technology"",
+  ""awards"": [
+    {
+      ""date"": ""2019-07"",
+      ""title"": ""Oracle President's Club Award"",
+      ""summary"": ""All inclusive vacation to Whistler, CA for the elite top performers of North American Sales."",
+      ""company_id"": null,
+      ""company_name"": ""Oracle""
+    },
+    {
+      ""date"": ""2018-09"",
+      ""title"": ""Q1- FY19 Enterprise Healthcare MVP"",
+      ""summary"": null,
+      ""company_id"": null,
+      ""company_name"": ""-""
+    },
+    {
+      ""date"": ""2018-06"",
+      ""title"": ""FY18 - Enterprise Healthcare Cloud MVP"",
+      ""summary"": null,
+      ""company_id"": null,
+      ""company_name"": ""-""
+    },
+    {
+      ""date"": ""2018-05"",
+      ""title"": ""Q4 - FY18 Enterprise Healthcare  Cloud MVP"",
+      ""summary"": null,
+      ""company_id"": null,
+      ""company_name"": ""-""
+    },
+    {
+      ""date"": ""2017-11"",
+      ""title"": ""Q2 - FY18 Enterprise Healthcare  Cloud MVP"",
+      ""summary"": null,
+      ""company_id"": null,
+      ""company_name"": ""-""
+    }
+  ],
+  ""country"": ""United States"",
+  ""courses"": null,
+  ""patents"": null,
+  ""summary"": ""11+ years of enterprise sales and sales management, business development, and customer facing skills deeply focused on helping customers find solutions to their business problems while maximizing their return on investment in information technology. I work with a number of the world's most innovative healthcare companies to help them standardize, integrate, automate, secure, and manage their data to empower business users.\""An individual's and an organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive advantage\"" - Jack Welch"",
+  ""user_id"": null,
+  ""headline"": ""Account Director - Salesforce Healthcare"",
+  ""projects"": null,
+  ""education"": [
+    {
+      ""grade"": null,
+      ""degree"": ""Bachelor of Arts (B.A.)"",
+      ""end_date"": null,
+      ""activities"": null,
+      ""start_date"": null,
+      ""school_name"": ""University of Massachusetts Amherst"",
+      ""field_of_study"": ""Economics and Journalism""
+    }
+  ],
+  ""languages"": [
+    {
+      ""language"": ""English"",
+      ""proficiency"": null
+    },
+    {
+      ""language"": ""Spanish"",
+      ""proficiency"": null
+    }
+  ],
+  ""last_name"": ""Prudhomme"",
+  ""person_id"": null,
+  ""experience"": [
+    {
+      ""url"": ""https://www.linkedin.com/company/salesforce"",
+      ""title"": ""Account Director - Healthcare Technology"",
+      ""org_id"": 3185,
+      ""company"": ""Salesforce"",
+      ""summary"": ""Partner with healthcare technology companies, digital health innovators, and ISV partners to drive revenue growth and digital transformation across patient and member engagement, operational performance, and regulatory readiness using the Salesforce platform.\n\n• Own full sales cycle responsibility and revenue targets across a portfolio of Healthcare Technology and ISV accounts, leading both net-new acquisition and expansion within existing customers.\n• Orchestrate cross-functional Salesforce teams (solution engineers, specialists, alliances, and services) to develop and close complex, multi-cloud platform deals.\n• Lead executive-level engagements with healthcare technology and ISV leaders, aligning business growth strategies with Salesforce platform roadmaps and joint go-to-market opportunities.\n• Position Salesforce’s AI, Data Cloud, and Health Cloud capabilities to unlock data-driven engagement, interoperability, and intelligent automation across the healthcare ecosystem."",
+      ""end_date"": null,
+      ""locality"": ""Boston, Massachusetts, United States"",
+      ""company_id"": null,
+      ""is_current"": true,
+      ""start_date"": ""2026-02-01"",
+      ""company_domain"": ""salesforce.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/salesforce"",
+      ""title"": ""Analytics Account Executive"",
+      ""org_id"": 3185,
+      ""company"": ""Salesforce"",
+      ""summary"": ""FY26: 186% of Annual Quota \nFY26: Largest Analytics Deal in Commercial Regulated Industries History\nFY26 Q2: HLS MVP and HLS Deal of Quarter Award\nFY25: 100.1% of Annual Quota\nFY25: AE Excellence Academy graduate (Top 5% of WW Sales) \nFY24: President's Club Attendee \nFY24: 178% of Annual Quota\nFY24 Q1: HLS MVP and HLS Deal of the Quarter Award \nFY23: 110% of Annual Quota\nFY23 Q4: HLS Provider - Strategic Deal of the Quarter Award\nFY22: Rookie of the Year - Tableau Healthcare and Life Sciences"",
+      ""end_date"": ""2026-02-01"",
+      ""locality"": ""Boston, Massachusetts, United States"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2021-03-01"",
+      ""company_domain"": ""salesforce.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/oracle"",
+      ""title"": ""Technology Sales Manager (Regulated Industries, Healthcare)"",
+      ""org_id"": 1028,
+      ""company"": ""Oracle"",
+      ""summary"": ""Enterprise Field Account Executive responsible for supporting Oracle's entire technology license IP across select Fortune 200 accounts in the Mid West. \n\nSpecific focus on cultivating C Level relationships and leading strategic deals with customers that already have a significant investment in Oracle technology and use Oracle to support mission critical business systems. \n\nQuarterback complex sales cycles for projects with a large number of customer stakeholders and multiple internal Oracle teams, as well as MSP's/VAR's.\n\nFY2021: \nQ2 - 370% of goal\nQ2 - Strategic Deal Award"",
+      ""end_date"": ""2021-03-01"",
+      ""locality"": ""Greater Boston Area"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2019-06-01"",
+      ""company_domain"": ""oracle.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/oracle"",
+      ""title"": ""Healthcare Account Executive"",
+      ""org_id"": 1028,
+      ""company"": ""Oracle"",
+      ""summary"": ""Field Account Executive responsible for developing and executing an in-depth IT go-to-market strategy for Oracle's payor and provider clients in Texas and Oklahoma. \n\nDevelop and cultivate C-Suite relationships to align customer's business initiatives with Oracle Database technologies as well as Oracle software supporting integration, analytics, security, data warehousing, hardware, compliance, archival storage, and application performance/development. \n\nExtensive working knowledge of hybrid enterprise architectures and strategic enterprise agreements.\n\nResponsible for leading and driving complex enterprise sales cycles with internal teams >15 members.\n\nFY2019: Oracle President's Club Excellence (Top 2% N.A. Sales) \nFY2019: 166% of annual goal"",
+      ""end_date"": ""2019-06-01"",
+      ""locality"": ""Greater Boston Area"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2018-10-01"",
+      ""company_domain"": ""oracle.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/oracle"",
+      ""title"": ""Healthcare Account Manager - Cloud Platform Technology"",
+      ""org_id"": 1028,
+      ""company"": ""Oracle"",
+      ""summary"": ""Sales development and inside sales account manager working exclusively to consult healthcare payors and providers on enterprise architecture and integration strategy across organizations exceeding $1B in annual revenue across the states of Colorado, Utah, Idaho, and Arizona. Extensive working knowledge of on-premise data centers, cloud architecture, and hybrid deployment approaches. \n\nResults oriented, repeat top performer, bringing consistent YoY revenue growth in territory through expansion and creation of strategic partnerships.\n\nOracle \""Class Of\"" program graduate.\n\nFY 2019: \n\nQ1: 365% of quarterly goal \nQ1 MVP\n\nFY 2018: 191% of annual goal \nQ2 - Oracle Cloud MVP\nQ4 - Oracle Cloud MVP \nFY18 - Oracle Cloud MVP of the year \n\nFY 2017: 121% of annual goal"",
+      ""end_date"": ""2018-10-01"",
+      ""locality"": ""Greater Boston Area"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2016-06-01"",
+      ""company_domain"": ""oracle.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": null,
+      ""title"": ""Assistant Program Director"",
+      ""org_id"": null,
+      ""company"": ""Clinton Recreation Summer Program"",
+      ""summary"": ""Responsible for financing and marketing an eight week summer camp program for 85-100 children \n-\tOversaw a staff of 12 counselors that each worked with children ages 6-13 \n-\tManaged and analyzed a comprehensive program-wide budget to operate at maximum efficiency and used said budget to plan events and  extended field trips\n-\tExtensive customer service experience dealing with the varying needs of individual families and campers on a 24/7 basis"",
+      ""end_date"": ""2015-08-01"",
+      ""locality"": ""Clinton, Massachusetts"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2013-06-01"",
+      ""company_domain"": null,
+      ""yearly_revenue_range"": null
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/451agency"",
+      ""title"": ""Inside Sales Account Manager"",
+      ""org_id"": 233374,
+      ""company"": ""451 Agency"",
+      ""summary"": ""Conducting research and generating content for marketing proposals for a large range of companies, ranging from start ups to large corporations.  Strong emphasis on search marketing and social media analysis.  Responsible for performing social media audits for clients and comparing them to competitive companies within the same industry.\n\nLed a team of 12 other interns in developing a comprehensive and all-inclusive marketing overhaul for the Special Olympics Massachusetts.  The newly designed strategy covered the areas of social media marketing, content marketing, public relations, and search engine optimization."",
+      ""end_date"": ""2014-08-01"",
+      ""locality"": null,
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2014-05-01"",
+      ""company_domain"": ""451agency.com"",
+      ""yearly_revenue_range"": ""10M-25M""
+    }
+  ],
+  ""first_name"": ""Cody"",
+  ""jobs_count"": 7,
+  ""profile_id"": 346619520,
+  ""connections"": 1775,
+  ""last_refresh"": ""2026-03-08 16:49:51.568"",
+  ""others_named"": null,
+  ""publications"": null,
+  ""volunteering"": null,
+  ""location_name"": ""Boston, Massachusetts, United States"",
+  ""num_followers"": 1780,
+  ""certifications"": null,
+  ""picture_url_copy"": null,
+  ""picture_url_orig"": null,
+  ""latest_experience"": {
+    ""url"": ""https://www.linkedin.com/company/salesforce"",
+    ""title"": ""Account Director - Healthcare Technology"",
+    ""org_id"": 3185,
+    ""company"": ""Salesforce"",
+    ""summary"": ""Partner with healthcare technology companies, digital health innovators, and ISV partners to drive revenue growth and digital transformation across patient and member engagement, operational performance, and regulatory readiness using the Salesforce platform.\n\n• Own full sales cycle responsibility and revenue targets across a portfolio of Healthcare Technology and ISV accounts, leading both net-new acquisition and expansion within existing customers.\n• Orchestrate cross-functional Salesforce teams (solution engineers, specialists, alliances, and services) to develop and close complex, multi-cloud platform deals.\n• Lead executive-level engagements with healthcare technology and ISV leaders, aligning business growth strategies with Salesforce platform roadmaps and joint go-to-market opportunities.\n• Position Salesforce’s AI, Data Cloud, and Health Cloud capabilities to unlock data-driven engagement, interoperability, and intelligent automation across the healthcare ecosystem."",
+    ""end_date"": null,
+    ""locality"": ""Boston, Massachusetts, United States"",
+    ""company_id"": null,
+    ""is_current"": true,
+    ""start_date"": ""2026-02-01"",
+    ""company_domain"": ""salesforce.com"",
+    ""yearly_revenue_range"": ""10B-100B""
+  },
+  ""current_experience"": [
+    {
+      ""url"": ""https://www.linkedin.com/company/salesforce"",
+      ""title"": ""Account Director - Healthcare Technology"",
+      ""org_id"": 3185,
+      ""company"": ""Salesforce"",
+      ""summary"": ""Partner with healthcare technology companies, digital health innovators, and ISV partners to drive revenue growth and digital transformation across patient and member engagement, operational performance, and regulatory readiness using the Salesforce platform.\n\n• Own full sales cycle responsibility and revenue targets across a portfolio of Healthcare Technology and ISV accounts, leading both net-new acquisition and expansion within existing customers.\n• Orchestrate cross-functional Salesforce teams (solution engineers, specialists, alliances, and services) to develop and close complex, multi-cloud platform deals.\n• Lead executive-level engagements with healthcare technology and ISV leaders, aligning business growth strategies with Salesforce platform roadmaps and joint go-to-market opportunities.\n• Position Salesforce’s AI, Data Cloud, and Health Cloud capabilities to unlock data-driven engagement, interoperability, and intelligent automation across the healthcare ecosystem."",
+      ""end_date"": null,
+      ""locality"": ""Boston, Massachusetts, United States"",
+      ""company_id"": null,
+      ""is_current"": true,
+      ""start_date"": ""2026-02-01"",
+      ""company_domain"": ""salesforce.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    }
+  ],
+  ""people_also_viewed"": null
+}"
+Willis Ashley,Willis,Ashley,University of Massachusetts Amherst,2014-2015,2015-2016,Sentinel,"2014-2015, 2015-2016",https://www.linkedin.com/in/willisashley,Sales Director,Ping Identity,Greater Boston,willisashley@pingidentity.com,https://www.linkedin.com/company/ping-identity,pingidentity.com,"{
+  ""dob"": null,
+  ""org"": ""Ping Identity"",
+  ""url"": ""https://www.linkedin.com/in/willisashley"",
+  ""name"": ""Willis Ashley"",
+  ""slug"": ""willisashley"",
+  ""title"": ""Sales Director"",
+  ""awards"": null,
+  ""country"": ""United States"",
+  ""courses"": null,
+  ""patents"": null,
+  ""summary"": ""At Ping Identity, I lead a high-performing sales team helping global enterprises modernize their identity and access management strategies. We partner with customers to deliver secure, seamless digital experiences for their workforce, customers, and partners, driving value through industry-leading identity solutions and insights.\n\nWith a strong foundation as a top-performing Enterprise Account Executive, I’ve transitioned into sales leadership where I focus on enabling my team, refining go-to-market strategies, and guiding complex enterprise deals. I thrive at the intersection of technical depth and business value, aligning stakeholders across engineering, product, security, IT, and the C-suite to solve real problems with measurable impact.\n\nIn addition to customer-facing and team work, I actively collaborate with cross-functional stakeholders to improve internal processes, provide guidance and expertise regarding generative AI, and drive operational efficiency across sales planning, reporting, and execution. My goal is to not only hit the number but also help build a smarter, more scalable sales org.\n\nCore strengths include:\n\t• Sales leadership and team development\n\t• Enterprise consultative selling\n\t• Business value articulation and financial modeling\n\t• AI adoption and process improvement\n\t• Cross-functional collaboration with product, marketing, and operations\n\nOutside of work, you’ll find me skiing, golfing, learning guitar riffs, traveling, and spending time with family and friends.\n\nAlways open to connecting with fellow GTM leaders, identity professionals, and anyone working to make digital experiences both secure and seamless."",
+  ""user_id"": null,
+  ""headline"": ""GTM Leader @ Ping Identity"",
+  ""projects"": null,
+  ""education"": [
+    {
+      ""grade"": null,
+      ""degree"": ""Applied Generative AI for Digital Transformation"",
+      ""end_date"": ""2025-09-01"",
+      ""activities"": null,
+      ""start_date"": ""2025-06-01"",
+      ""school_name"": ""MIT Professional Education"",
+      ""field_of_study"": ""Artificial Intelligence""
+    },
+    {
+      ""grade"": null,
+      ""degree"": ""Bachelor of Business Administration (BBA)"",
+      ""end_date"": ""2017-01-01"",
+      ""activities"": null,
+      ""start_date"": ""2013-01-01"",
+      ""school_name"": ""Isenberg School of Management, UMass Amherst"",
+      ""field_of_study"": ""Operations & Information Management""
+    }
+  ],
+  ""languages"": [
+    {
+      ""language"": ""English"",
+      ""proficiency"": null
+    },
+    {
+      ""language"": ""Spanish"",
+      ""proficiency"": ""Elementary proficiency""
+    }
+  ],
+  ""last_name"": ""Ashley"",
+  ""person_id"": null,
+  ""experience"": [
+    {
+      ""url"": ""https://www.linkedin.com/company/ping-identity"",
+      ""title"": ""Sales Director"",
+      ""org_id"": 21870,
+      ""company"": ""Ping Identity"",
+      ""summary"": null,
+      ""end_date"": null,
+      ""locality"": ""Greater Boston"",
+      ""company_id"": null,
+      ""is_current"": true,
+      ""start_date"": ""2026-01-01"",
+      ""company_domain"": ""pingidentity.com"",
+      ""yearly_revenue_range"": ""500M-1B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/ping-identity"",
+      ""title"": ""Senior Manager, Sales"",
+      ""org_id"": 21870,
+      ""company"": ""Ping Identity"",
+      ""summary"": null,
+      ""end_date"": ""2025-12-01"",
+      ""locality"": ""Boston, Massachusetts, United States"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2025-01-01"",
+      ""company_domain"": ""pingidentity.com"",
+      ""yearly_revenue_range"": ""500M-1B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/ping-identity"",
+      ""title"": ""Enterprise Account Executive"",
+      ""org_id"": 21870,
+      ""company"": ""Ping Identity"",
+      ""summary"": null,
+      ""end_date"": ""2025-01-01"",
+      ""locality"": null,
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2024-01-01"",
+      ""company_domain"": ""pingidentity.com"",
+      ""yearly_revenue_range"": ""500M-1B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/ping-identity"",
+      ""title"": ""Account Executive"",
+      ""org_id"": 21870,
+      ""company"": ""Ping Identity"",
+      ""summary"": null,
+      ""end_date"": ""2024-01-01"",
+      ""locality"": ""Burlington, Massachusetts, United States"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2020-03-01"",
+      ""company_domain"": ""pingidentity.com"",
+      ""yearly_revenue_range"": ""500M-1B""
+    },
+    {
+      ""url"": null,
+      ""title"": ""GTM Consultant"",
+      ""org_id"": null,
+      ""company"": ""Reward Boats"",
+      ""summary"": null,
+      ""end_date"": ""2024-12-01"",
+      ""locality"": null,
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2021-09-01"",
+      ""company_domain"": null,
+      ""yearly_revenue_range"": null
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/the-university-of-massachusetts-club"",
+      ""title"": ""Young Alumni Board Member"",
+      ""org_id"": 11742137,
+      ""company"": ""The University of Massachusetts Club"",
+      ""summary"": null,
+      ""end_date"": ""2021-12-01"",
+      ""locality"": ""Greater Boston Area"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2019-01-01"",
+      ""company_domain"": ""umassclub.com"",
+      ""yearly_revenue_range"": ""1M-5M""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/oracle"",
+      ""title"": ""Field Account Executive"",
+      ""org_id"": 1028,
+      ""company"": ""Oracle"",
+      ""summary"": null,
+      ""end_date"": ""2020-03-01"",
+      ""locality"": ""Burlington, Massachusetts"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2019-06-01"",
+      ""company_domain"": ""oracle.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/oracle"",
+      ""title"": ""Enterprise Account Manager"",
+      ""org_id"": 1028,
+      ""company"": ""Oracle"",
+      ""summary"": null,
+      ""end_date"": ""2019-06-01"",
+      ""locality"": ""Burlington, MA"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2018-05-01"",
+      ""company_domain"": ""oracle.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/oracle"",
+      ""title"": ""Cloud Applications Consultant"",
+      ""org_id"": 1028,
+      ""company"": ""Oracle"",
+      ""summary"": null,
+      ""end_date"": ""2018-05-01"",
+      ""locality"": ""Burlington, Massachusetts"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2017-06-01"",
+      ""company_domain"": ""oracle.com"",
+      ""yearly_revenue_range"": ""10B-100B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/university-of-massachusetts"",
+      ""title"": ""Transit Authority Dispatcher"",
+      ""org_id"": 4507,
+      ""company"": ""University of Massachusetts"",
+      ""summary"": ""Bus driver, trainer, and dispatcher"",
+      ""end_date"": ""2017-07-01"",
+      ""locality"": ""Amherst, MA"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2014-11-01"",
+      ""company_domain"": null,
+      ""yearly_revenue_range"": ""1B-10B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/pratt-&-whitney"",
+      ""title"": ""Operations & Logisitics Technology Intern"",
+      ""org_id"": 2425,
+      ""company"": ""Pratt & Whitney"",
+      ""summary"": ""Process improvement and technology operations"",
+      ""end_date"": ""2016-09-01"",
+      ""locality"": ""North Berwick, ME"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2016-05-01"",
+      ""company_domain"": ""rtx.com"",
+      ""yearly_revenue_range"": ""1B-10B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/march-of-dimes"",
+      ""title"": ""Operations Analyst Intern"",
+      ""org_id"": 7539,
+      ""company"": ""March of Dimes"",
+      ""summary"": ""Financial planning and event execution"",
+      ""end_date"": ""2015-11-01"",
+      ""locality"": ""Westborough, MA"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2015-05-01"",
+      ""company_domain"": ""marchofdimes.org"",
+      ""yearly_revenue_range"": ""75M-200M""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/school/umassamherst"",
+      ""title"": ""Resident Assistant"",
+      ""org_id"": 4508,
+      ""company"": ""University of Massachusetts Amherst"",
+      ""summary"": null,
+      ""end_date"": ""2015-05-01"",
+      ""locality"": ""Coolidge Tower"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2014-08-01"",
+      ""company_domain"": ""umass.edu"",
+      ""yearly_revenue_range"": ""1B-10B""
+    },
+    {
+      ""url"": ""https://www.linkedin.com/company/ted-conferences"",
+      ""title"": ""Development Director"",
+      ""org_id"": 610087,
+      ""company"": ""TEDxUMassAmherst"",
+      ""summary"": null,
+      ""end_date"": ""2014-05-01"",
+      ""locality"": ""Amherst, MA"",
+      ""company_id"": null,
+      ""is_current"": false,
+      ""start_date"": ""2013-09-01"",
+      ""company_domain"": ""ted.com"",
+      ""yearly_revenue_range"": ""1B-10B""
+    }
+  ],
+  ""first_name"": ""Willis"",
+  ""jobs_count"": 14,
+  ""profile_id"": 188166917,
+  ""connections"": 3149,
+  ""last_refresh"": ""2026-03-08 16:49:53.327"",
+  ""others_named"": null,
+  ""publications"": null,
+  ""volunteering"": null,
+  ""location_name"": ""Greater Boston, United States"",
+  ""num_followers"": 3266,
+  ""certifications"": [
+    {
+      ""date"": ""2025-09-01"",
+      ""title"": ""Applied Generative AI for Digital Transformation"",
+      ""summary"": null,
+      ""company_id"": null,
+      ""verify_url"": null,
+      ""company_name"": ""MIT Professional Education"",
+      ""credential_id"": null
+    },
+    {
+      ""date"": null,
+      ""title"": ""Commercial Driver (Truck And Bus Operator)"",
+      ""summary"": null,
+      ""company_id"": null,
+      ""verify_url"": null,
+      ""company_name"": ""University of Massachusetts Amherst"",
+      ""credential_id"": null
+    }
+  ],
+  ""picture_url_copy"": null,
+  ""picture_url_orig"": null,
+  ""latest_experience"": {
+    ""url"": ""https://www.linkedin.com/company/ping-identity"",
+    ""title"": ""Sales Director"",
+    ""org_id"": 21870,
+    ""company"": ""Ping Identity"",
+    ""summary"": null,
+    ""end_date"": null,
+    ""locality"": ""Greater Boston"",
+    ""company_id"": null,
+    ""is_current"": true,
+    ""start_date"": ""2026-01-01"",
+    ""company_domain"": ""pingidentity.com"",
+    ""yearly_revenue_range"": ""500M-1B""
+  },
+  ""current_experience"": [
+    {
+      ""url"": ""https://www.linkedin.com/company/ping-identity"",
+      ""title"": ""Sales Director"",
+      ""org_id"": 21870,
+      ""company"": ""Ping Identity"",
+      ""summary"": null,
+      ""end_date"": null,
+      ""locality"": ""Greater Boston"",
+      ""company_id"": null,
+      ""is_current"": true,
+      ""start_date"": ""2026-01-01"",
+      ""company_domain"": ""pingidentity.com"",
+      ""yearly_revenue_range"": ""500M-1B""
+    }
+  ],
+  ""people_also_viewed"": null
+}"
+Tim Jablonsky,Tim,Jablonsky,University of Massachusetts Amherst,2015-2016,2017–2018,"President, Vice President","2015-2016, 2017–2018",https://www.linkedin.com/in/timjablonsky/,Regulatory Counsel,Beazley,"Connecticut, United States",tim.jablonsky@beazley.com,https://www.linkedin.com/company/beazley,beazley.com,"{""awards"":[{""company_id"":null,""company_name"":""University of Massachusetts, Amherst"",""date"":null,""summary"":null,""title"":""Dean's List""}],""certifications"":null,""connections"":751,""country"":""United States"",""courses"":null,""current_experience"":[{""company"":""Beazley"",""company_domain"":""beazley.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Connecticut, United States"",""org_id"":15991,""start_date"":""2023-08-01"",""summary"":null,""title"":""Regulatory Counsel"",""url"":""https://www.linkedin.com/company/beazley"",""yearly_revenue_range"":""1B-10B""}],""dob"":null,""education"":[{""activities"":null,""degree"":""Doctor of Law - JD"",""end_date"":""2021-01-01"",""field_of_study"":""Law"",""grade"":null,""school_name"":""University of Connecticut School of Law"",""start_date"":""2018-01-01""},{""activities"":null,""degree"":""Sport Management"",""end_date"":""2018-01-01"",""field_of_study"":null,""grade"":null,""school_name"":""University of Massachusetts Amherst"",""start_date"":""2014-01-01""}],""experience"":[{""company"":""Beazley"",""company_domain"":""beazley.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Connecticut, United States"",""org_id"":15991,""start_date"":""2023-08-01"",""summary"":null,""title"":""Regulatory Counsel"",""url"":""https://www.linkedin.com/company/beazley"",""yearly_revenue_range"":""1B-10B""},{""company"":""Chipman Mazzucco Emerson LLC"",""company_domain"":""danburylaw.com"",""company_id"":null,""end_date"":""2023-08-01"",""is_current"":false,""locality"":""Danbury, Connecticut, United States"",""org_id"":18124214,""start_date"":""2021-10-01"",""summary"":null,""title"":""Associate Attorney"",""url"":""https://www.linkedin.com/company/chipman-mazzucco-emerson-llc"",""yearly_revenue_range"":""1M-5M""},{""company"":""Chipman Mazzucco Emerson LLC"",""company_domain"":""danburylaw.com"",""company_id"":null,""end_date"":""2021-10-01"",""is_current"":false,""locality"":""Danbury, Connecticut, United States"",""org_id"":18124214,""start_date"":""2021-08-01"",""summary"":null,""title"":""Law Clerk"",""url"":""https://www.linkedin.com/company/chipman-mazzucco-emerson-llc"",""yearly_revenue_range"":""1M-5M""},{""company"":""University of Connecticut School of Law"",""company_domain"":""uconn.edu"",""company_id"":null,""end_date"":""2021-09-01"",""is_current"":false,""locality"":""Hartford, Connecticut Area"",""org_id"":15099909,""start_date"":""2018-07-01"",""summary"":null,""title"":""Student"",""url"":""https://www.linkedin.com/school/uconn-law"",""yearly_revenue_range"":""10M-25M""},{""company"":""Connecticut Urban Legal Initiative"",""company_domain"":null,""company_id"":null,""end_date"":""2019-12-01"",""is_current"":false,""locality"":""Hartford, Connecticut"",""org_id"":null,""start_date"":""2019-06-01"",""summary"":""Drafted necessary documents for incorporation and dissolution of non-profit organizations. Assisted non-profit organizations in filing appropriate documentation to maintain good standing with state and federal taxing authorities. Met with clients to determine the legal needs of their non-profit organizations. Researched various statutory regulations to ensure clients were in compliance with current law."",""title"":""Legal Intern"",""url"":null,""yearly_revenue_range"":null},{""company"":""Committee for Public Counsel Services"",""company_domain"":""publiccounsel.net"",""company_id"":null,""end_date"":""2019-09-01"",""is_current"":false,""locality"":""Springfield, Massachusetts "",""org_id"":31349,""start_date"":""2019-06-01"",""summary"":""Researched both misdemeanor and felony charges against indigent clients who had been appointed a public defender. Drafted motions to dismiss felony charges. Interviewed clients and prepared arguments for bail hearings. Attended oral arguments and trials at the Springfield District Court."",""title"":""Public Defender Intern"",""url"":""https://www.linkedin.com/company/committee-for-public-counsel-services"",""yearly_revenue_range"":""75M-200M""},{""company"":""Isenberg School of Management, UMass Amherst"",""company_domain"":""umass.edu"",""company_id"":null,""end_date"":""2018-05-01"",""is_current"":false,""locality"":""Amherst, MA"",""org_id"":2468374,""start_date"":""2017-01-01"",""summary"":null,""title"":""Assistant to The Dean"",""url"":""https://www.linkedin.com/school/isenberg-school-of-management-umass-amherst"",""yearly_revenue_range"":""25M-75M""},{""company"":""ALKU"",""company_domain"":""alku.com"",""company_id"":null,""end_date"":""2016-01-01"",""is_current"":false,""locality"":""Andover, MA"",""org_id"":2489937,""start_date"":""2015-12-01"",""summary"":""ALKU is a highly specialized consulting firm based in Andover, Massachusetts. We are comprised of three highly specialized and niche focused divisions, ALKU Technologies (providing ERP consultants, in the areas of SAP and PeopleSoft). ALKU Quality (works in areas of FDA quality and compliance within the medical device, pharmaceutical, biotechnology industries) and ALKU Government Solutions (providing mission focused enterprise technology and military intelligence analytics based solutions in support of intelligence, defense and homeland security customers). \n\nAll three divisions provide clients contract resources for their specific needs. We work on a national basis, with clients in all sizes and industries."",""title"":""Recruiting Intern"",""url"":""https://www.linkedin.com/company/lifeatalku"",""yearly_revenue_range"":""200M-500M""},{""company"":""Mullins Center Fall Face-Off"",""company_domain"":null,""company_id"":null,""end_date"":""2015-09-01"",""is_current"":false,""locality"":null,""org_id"":null,""start_date"":""2014-11-01"",""summary"":""The Mullins Center Fall Face-Off is a student run, youth hockey tournament on the University of Massachusetts Amherst campus. The students running the tournament are members of McCormack Leaders Club."",""title"":""Director of Tournament Operations"",""url"":null,""yearly_revenue_range"":null},{""company"":""Engage Marketing Inc."",""company_domain"":""engagemarketingllc.com"",""company_id"":null,""end_date"":""2015-08-01"",""is_current"":false,""locality"":null,""org_id"":2388738,""start_date"":""2015-05-01"",""summary"":""Gaining valuable experience in consumer engagement strategy, experiential, and property representation. Have focused primarily on sales outreach and event coordination."",""title"":""Intern"",""url"":""https://www.linkedin.com/company/engagemarketinglocal"",""yearly_revenue_range"":""0-500K""}],""first_name"":""Tim"",""headline"":""Regulatory Counsel at Beazley"",""jobs_count"":10,""languages"":[{""language"":""English"",""proficiency"":""Native or bilingual proficiency""}],""last_name"":""Jablonsky"",""last_refresh"":""2026-03-03 21:22:01.862"",""latest_experience"":{""company"":""Beazley"",""company_domain"":""beazley.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Connecticut, United States"",""org_id"":15991,""start_date"":""2023-08-01"",""summary"":null,""title"":""Regulatory Counsel"",""url"":""https://www.linkedin.com/company/beazley"",""yearly_revenue_range"":""1B-10B""},""location_name"":""Greater Hartford, United States"",""name"":""Tim Jablonsky"",""num_followers"":755,""org"":""Beazley"",""others_named"":null,""patents"":null,""people_also_viewed"":null,""person_id"":null,""picture_url_copy"":null,""picture_url_orig"":null,""profile_id"":392440909,""projects"":null,""publications"":null,""slug"":""timjablonsky"",""summary"":null,""title"":""Regulatory Counsel"",""url"":""https://www.linkedin.com/in/timjablonsky"",""user_id"":null,""volunteering"":[{""cause"":null,""company_domain"":null,""company_id"":null,""company_name"":null,""end_date"":""2014"",""role"":""Volunteer"",""start_date"":""2011"",""summary"":""I logged over one hundred hours of volunteer work with numerous organizations while I was a member of the National Honor Society.""}]}"
+Igor Vieira,Igor,Vieira,University of Massachusetts Amherst,2018–2019,2021-2022,"President, Risk Manager, Sentinel","2018–2019, 2019-2020, 2021-2022",https://www.linkedin.com/in/igordvieira,Consultant,Bain & Company,"Boston, Massachusetts, United States",,https://www.linkedin.com/company/bain-and-company,bain.com,"{""awards"":[{""company_id"":null,""company_name"":""-"",""date"":""2019-10"",""summary"":null,""title"":""2nd place in EY Inclusive Leadership Summit Case Study Competition""},{""company_id"":null,""company_name"":""Massachusetts State Referee Committee"",""date"":""2018-11"",""summary"":null,""title"":""Young Referee of the Year""},{""company_id"":null,""company_name"":""Massachusetts Department of Elementary and Secondary Education"",""date"":""2018-05"",""summary"":null,""title"":""Massachusetts Multilingual Silver Seal""},{""company_id"":null,""company_name"":""The College Board"",""date"":""2017-06"",""summary"":null,""title"":""AP Scholar Award""}],""certifications"":[{""company_id"":null,""company_name"":""Isenberg School of Management, UMass Amherst"",""credential_id"":null,""date"":""2019-10-01"",""summary"":null,""title"":""Inclusive Leadership Summit Certificate"",""verify_url"":null},{""company_id"":null,""company_name"":""American Red Cross"",""credential_id"":null,""date"":""2018-04-01"",""summary"":null,""title"":""Lifeguarding/CPR/AED/First Aid"",""verify_url"":null}],""connections"":1191,""country"":""United Kingdom"",""courses"":null,""current_experience"":[{""company"":""Bain & Company"",""company_domain"":""bain.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Boston, Massachusetts, United States"",""org_id"":2114,""start_date"":""2025-03-01"",""summary"":null,""title"":""Consultant"",""url"":""https://www.linkedin.com/company/bain-and-company"",""yearly_revenue_range"":""1B-10B""}],""dob"":null,""education"":[{""activities"":null,""degree"":""Master of Business Administration - MBA"",""end_date"":""2027-07-01"",""field_of_study"":null,""grade"":null,""school_name"":""London Business School"",""start_date"":""2025-08-01""},{""activities"":null,""degree"":""Bachelor of Business Administration - BBA"",""end_date"":""2022-01-01"",""field_of_study"":""Operations and Information Management, General"",""grade"":null,""school_name"":""Isenberg School of Management, UMass Amherst"",""start_date"":""2018-01-01""},{""activities"":null,""degree"":""Bachelor of Business Administration - BBA"",""end_date"":""2022-05-01"",""field_of_study"":""Operations & Information Management"",""grade"":null,""school_name"":""University of Massachusetts Amherst"",""start_date"":""2018-08-01""},{""activities"":null,""degree"":""High School Diploma"",""end_date"":""2018-01-01"",""field_of_study"":null,""grade"":null,""school_name"":""Medford High School"",""start_date"":""2014-01-01""}],""experience"":[{""company"":""Bain & Company"",""company_domain"":""bain.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Boston, Massachusetts, United States"",""org_id"":2114,""start_date"":""2025-03-01"",""summary"":null,""title"":""Consultant"",""url"":""https://www.linkedin.com/company/bain-and-company"",""yearly_revenue_range"":""1B-10B""},{""company"":""Bain & Company"",""company_domain"":""bain.com"",""company_id"":null,""end_date"":""2025-02-01"",""is_current"":false,""locality"":""Boston, Massachusetts, United States"",""org_id"":2114,""start_date"":""2024-09-01"",""summary"":null,""title"":""Senior Associate Consultant"",""url"":""https://www.linkedin.com/company/bain-and-company"",""yearly_revenue_range"":""1B-10B""},{""company"":""Bain & Company"",""company_domain"":""bain.com"",""company_id"":null,""end_date"":""2024-08-01"",""is_current"":false,""locality"":""Boston, Massachusetts, United States"",""org_id"":2114,""start_date"":""2022-06-01"",""summary"":null,""title"":""Associate Consultant"",""url"":""https://www.linkedin.com/company/bain-and-company"",""yearly_revenue_range"":""1B-10B""},{""company"":""National Football League (NFL)"",""company_domain"":""nfl.com"",""company_id"":null,""end_date"":""2025-08-01"",""is_current"":false,""locality"":""New York, New York, United States"",""org_id"":4541,""start_date"":""2025-02-01"",""summary"":""Externship from Bain"",""title"":""Extern, Sports Betting"",""url"":""https://www.linkedin.com/company/national-football-league"",""yearly_revenue_range"":""1B-10B""},{""company"":""U.S. Soccer Federation"",""company_domain"":""ussoccer.com"",""company_id"":null,""end_date"":""2024-12-01"",""is_current"":false,""locality"":null,""org_id"":57472,""start_date"":""2012-03-01"",""summary"":null,""title"":""Referee"",""url"":""https://www.linkedin.com/company/united-states-soccer-federation"",""yearly_revenue_range"":""1B-10B""},{""company"":""Isenberg School of Management, UMass Amherst"",""company_domain"":""umass.edu"",""company_id"":null,""end_date"":""2022-05-01"",""is_current"":false,""locality"":null,""org_id"":2468374,""start_date"":""2021-08-01"",""summary"":""SCH-MGMT 191T: Freshmen Transitions Course"",""title"":""Teaching Assistant"",""url"":""https://www.linkedin.com/school/isenberg-school-of-management-umass-amherst"",""yearly_revenue_range"":""25M-75M""},{""company"":""Microsoft"",""company_domain"":""microsoft.com"",""company_id"":null,""end_date"":""2021-08-01"",""is_current"":false,""locality"":null,""org_id"":1035,""start_date"":""2021-05-01"",""summary"":null,""title"":""Operations Program Manager Intern"",""url"":""https://www.linkedin.com/company/microsoft"",""yearly_revenue_range"":""100B-1T""},{""company"":""ClassMate"",""company_domain"":""theclassmateapp.com"",""company_id"":null,""end_date"":""2021-08-01"",""is_current"":false,""locality"":null,""org_id"":68270881,""start_date"":""2019-10-01"",""summary"":null,""title"":""CFO / Founder"",""url"":""https://www.linkedin.com/company/theclassmateapp"",""yearly_revenue_range"":""1M-5M""},{""company"":""EY"",""company_domain"":""ey.com"",""company_id"":null,""end_date"":""2020-08-01"",""is_current"":false,""locality"":null,""org_id"":1073,""start_date"":""2020-07-01"",""summary"":null,""title"":""Consulting Launch Intern"",""url"":""https://www.linkedin.com/company/ernstandyoung"",""yearly_revenue_range"":""1B-10B""},{""company"":""Medford Recreation"",""company_domain"":null,""company_id"":null,""end_date"":""2020-08-01"",""is_current"":false,""locality"":""Medford, MA"",""org_id"":null,""start_date"":""2018-06-01"",""summary"":null,""title"":""Head Lifeguard"",""url"":null,""yearly_revenue_range"":null}],""first_name"":""Igor"",""headline"":""MBA Candidate at London Business School | Consultant at Bain & Company"",""jobs_count"":10,""languages"":[{""language"":""English"",""proficiency"":""Native or bilingual proficiency""},{""language"":""Portuguese"",""proficiency"":""Native or bilingual proficiency""}],""last_name"":""De Sousa-Vieira"",""last_refresh"":""2026-03-03 21:21:55.351"",""latest_experience"":{""company"":""Bain & Company"",""company_domain"":""bain.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Boston, Massachusetts, United States"",""org_id"":2114,""start_date"":""2025-03-01"",""summary"":null,""title"":""Consultant"",""url"":""https://www.linkedin.com/company/bain-and-company"",""yearly_revenue_range"":""1B-10B""},""location_name"":""London, England, United Kingdom"",""name"":""Igor De Sousa-Vieira"",""num_followers"":1198,""org"":""Bain & Company"",""others_named"":null,""patents"":null,""people_also_viewed"":null,""person_id"":null,""picture_url_copy"":null,""picture_url_orig"":null,""profile_id"":704286581,""projects"":null,""publications"":null,""slug"":""igordvieira"",""summary"":null,""title"":""Consultant"",""url"":""https://www.linkedin.com/in/igordvieira"",""user_id"":null,""volunteering"":[{""cause"":null,""company_domain"":null,""company_id"":null,""company_name"":null,""end_date"":""2020-03"",""role"":""Volunteer"",""start_date"":""2020-03"",""summary"":""- Provided breakfast and lunch to food-insecure families throughout the Medford area""},{""cause"":null,""company_domain"":null,""company_id"":null,""company_name"":null,""end_date"":""2022-09"",""role"":""Fundraising Volunteer"",""start_date"":""2018-09"",""summary"":null},{""cause"":null,""company_domain"":null,""company_id"":null,""company_name"":null,""end_date"":""2020-06"",""role"":""Fundraising Volunteer"",""start_date"":""2020-06"",""summary"":""Ran 3,452 miles in 80 days with 7 other team members in the Medford2Medford: Run Across America Virtual Race to raise funds""},{""cause"":""Civil Rights and Social Action"",""company_domain"":null,""company_id"":null,""company_name"":null,""end_date"":""2020-06"",""role"":""Fundraising Manager"",""start_date"":""2020-06"",""summary"":""- Raised $1,850 in 9 days through a social media social change platform""}]}"
+Ben Sebestyen,Ben,Sebestyen,University of Massachusetts Amherst,2022-2023,2022-2023,"Risk Manager, Vice President",2022-2023,https://www.linkedin.com/in/ben-sebestyen,FSO Risk Consulting Staff,EY,"Boston, Massachusetts, United States",ben.sebestyen@ey.com,https://www.linkedin.com/company/ernstandyoung,ey.com,"{""awards"":null,""certifications"":[{""company_id"":null,""company_name"":""IBM"",""credential_id"":null,""date"":""2025-05-01"",""summary"":null,""title"":""Artificial Intelligence Fundamentals"",""verify_url"":null},{""company_id"":null,""company_name"":""OneStream Software"",""credential_id"":null,""date"":""2024-06-01"",""summary"":null,""title"":""OneStream Essentials: Getting Started With OneStream"",""verify_url"":null}],""connections"":842,""country"":""United States"",""courses"":null,""current_experience"":[{""company"":""EY"",""company_domain"":""ey.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Boston, Massachusetts, United States"",""org_id"":1073,""start_date"":""2025-09-01"",""summary"":null,""title"":""FSO Risk Consulting Staff"",""url"":""https://www.linkedin.com/company/ernstandyoung"",""yearly_revenue_range"":""1B-10B""}],""dob"":null,""education"":[{""activities"":null,""degree"":null,""end_date"":""2025-01-01"",""field_of_study"":null,""grade"":null,""school_name"":""Isenberg School of Management, UMass Amherst"",""start_date"":""2021-01-01""},{""activities"":null,""degree"":null,""end_date"":""2025-01-01"",""field_of_study"":null,""grade"":null,""school_name"":""University of Massachusetts Amherst"",""start_date"":""2021-01-01""},{""activities"":null,""degree"":null,""end_date"":""2021-01-01"",""field_of_study"":null,""grade"":null,""school_name"":""Cohasset Middle/High School"",""start_date"":""2018-01-01""}],""experience"":[{""company"":""EY"",""company_domain"":""ey.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Boston, Massachusetts, United States"",""org_id"":1073,""start_date"":""2025-09-01"",""summary"":null,""title"":""FSO Risk Consulting Staff"",""url"":""https://www.linkedin.com/company/ernstandyoung"",""yearly_revenue_range"":""1B-10B""},{""company"":""CrossCountry Consulting"",""company_domain"":""crosscountry-consulting.com"",""company_id"":null,""end_date"":""2024-08-01"",""is_current"":false,""locality"":""Boston, Massachusetts, United States"",""org_id"":2246857,""start_date"":""2024-06-01"",""summary"":null,""title"":""Business Transformation Consulting Intern"",""url"":""https://www.linkedin.com/company/crosscountry-consulting"",""yearly_revenue_range"":""200M-500M""},{""company"":""Scotts Landscaping"",""company_domain"":""scottslandscapinginc.com"",""company_id"":null,""end_date"":""2023-08-01"",""is_current"":false,""locality"":null,""org_id"":9515436,""start_date"":""2023-05-01"",""summary"":""Led a crew that completed landscape maintenance work for private and commercial sites."",""title"":""Landscape Laborer"",""url"":""https://www.linkedin.com/company/scotts-landscaping"",""yearly_revenue_range"":""1M-5M""},{""company"":""Town of Scituate (MA)"",""company_domain"":""scituatema.gov"",""company_id"":null,""end_date"":""2022-08-01"",""is_current"":false,""locality"":null,""org_id"":14058816,""start_date"":""2022-05-01"",""summary"":""Worked daily with a skilled team to complete state funded large scale landscaping work and collaborated with town officials and law enforcement to set up town events"",""title"":""Public Grounds Worker"",""url"":""https://www.linkedin.com/company/town-of-scituate-ma"",""yearly_revenue_range"":""10M-25M""},{""company"":""Town Of Cohasset Public Works"",""company_domain"":null,""company_id"":null,""end_date"":""2021-08-01"",""is_current"":false,""locality"":null,""org_id"":9008564,""start_date"":""2018-07-01"",""summary"":""Worked as a camp counselor responsible for a group of 15 kids. Planned daily activities as well as of campus field trips."",""title"":""Camp Counselor"",""url"":""https://www.linkedin.com/company/town-of-cohasset-public-works"",""yearly_revenue_range"":""0-500K""}],""first_name"":""Ben"",""headline"":""Risk Consulting at EY"",""jobs_count"":5,""languages"":[{""language"":""English"",""proficiency"":null}],""last_name"":""Sebestyen"",""last_refresh"":""2026-03-03 21:21:55.393"",""latest_experience"":{""company"":""EY"",""company_domain"":""ey.com"",""company_id"":null,""end_date"":null,""is_current"":true,""locality"":""Boston, Massachusetts, United States"",""org_id"":1073,""start_date"":""2025-09-01"",""summary"":null,""title"":""FSO Risk Consulting Staff"",""url"":""https://www.linkedin.com/company/ernstandyoung"",""yearly_revenue_range"":""1B-10B""},""location_name"":""Boston, Massachusetts, United States"",""name"":""Ben Sebestyen"",""num_followers"":843,""org"":""EY"",""others_named"":null,""patents"":null,""people_also_viewed"":null,""person_id"":null,""picture_url_copy"":null,""picture_url_orig"":null,""profile_id"":951341174,""projects"":[{""end_date"":null,""start_date"":""2014-01"",""summary"":""Merchandising Jobs completed on behalf of industry leaders.  Before and after pics.  POS and premium floor locations negotiated for certain builds."",""title"":""Merchandising Project Portfolio"",""url"":null}],""publications"":null,""slug"":""ben-sebestyen"",""summary"":""Recent graduate from the Isenberg School of Management at UMass Amherst. Focused coursework in data analytics, financial accounting, SOX compliance, financial investments and performance management software. Dean's List honor's student all semesters."",""title"":""FSO Risk Consulting Staff"",""url"":""https://www.linkedin.com/in/ben-sebestyen"",""user_id"":null,""volunteering"":[{""cause"":null,""company_domain"":null,""company_id"":null,""company_name"":null,""end_date"":null,""role"":""Meal server at Pine Street Inn Shelter"",""start_date"":null,""summary"":""Meal transporter & server""}]}"

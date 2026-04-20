@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 6 12% 15%;
+  --foreground: 28 18% 94%;
+  --card: 10 10% 20%;
+  --card-foreground: 28 18% 95%;
+  --primary: 0 69% 58%;
+  --primary-foreground: 28 18% 96%;
+  --secondary: 15 7% 29%;
+  --secondary-foreground: 28 14% 88%;
+  --muted: 10 8% 24%;
+  --muted-foreground: 18 11% 72%;
+  --accent: 0 36% 30%;
+  --accent-foreground: 28 18% 95%;
+  --border: 0 0% 100% / 0.07;
+  --input: 0 0% 100% / 0.08;
+  --ring: 0 69% 58%;
+  --radius: 0.85rem;
+}
+
+* {
+  @apply border-border;
+}
+
+html {
+  color-scheme: dark;
+}
+
+::selection {
+  background: rgba(222, 73, 73, 0.35);
+  color: #fff7f2;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  background:
+    radial-gradient(circle at top left, rgba(222, 73, 73, 0.2), transparent 24%),
+    radial-gradient(circle at top right, rgba(210, 202, 198, 0.08), transparent 22%),
+    linear-gradient(180deg, #261f21 0%, #31282b 100%);
+}
+
+a {
+  @apply transition-colors;
+}
+
+.app-panel {
+  @apply rounded-xl border border-white/[0.06] bg-[#352d30] shadow-[0_0_0_1px_rgba(255,255,255,0.02)];
+}
+
+.app-toolbar {
+  @apply rounded-xl border border-white/[0.06] bg-[#3a3235]/95 shadow-[0_0_0_1px_rgba(255,255,255,0.02)];
+}
+
+.page-title {
+  @apply text-3xl font-semibold tracking-tight text-slate-50;
+}
+
+.page-subtitle {
+  @apply text-sm text-stone-300;
+}

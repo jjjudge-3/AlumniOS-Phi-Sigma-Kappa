@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Alumni {
+  id                 Int      @id @default(autoincrement())
+  fullName           String
+  firstName          String
+  lastName           String
+  college            String?
+  compositeYears     String?
+  linkedinValidation String?
+  linkedinUrl        String?
+  jobTitle           String?
+  currentCompany     String?
+  companyLinkedinUrl String?
+  companyDomain      String?
+  workEmail          String?
+  locationRaw        String?
+  locationCity       String?
+  locationState      String?
+  locationCountry    String?
+  major              String?
+  graduateSchool     String?
+  graduateSchoolMajor String?
+  companyIndustry    String?
+  jobFunction        String?
+  companyLogoUrl     String?
+  alumniAtCompanyCount Int   @default(1)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([fullName])
+  @@index([currentCompany])
+  @@index([companyIndustry])
+  @@index([locationState])
+  @@index([jobFunction])
+}
