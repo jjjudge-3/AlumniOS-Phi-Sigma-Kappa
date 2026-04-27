@@ -29,7 +29,6 @@ export function OnboardingForm({
     firstName: "",
     lastName: "",
     permanentAddress: "",
-    birthday: "",
     schoolEmail: "",
     linkedinUrl: "",
     hometown: "",
@@ -124,7 +123,6 @@ export function OnboardingForm({
           first_name: form.firstName.trim(),
           last_name: form.lastName.trim(),
           permanent_address: form.permanentAddress || null,
-          birthday: form.birthday || null,
           onboarding_complete: false,
         });
 
@@ -195,10 +193,7 @@ export function OnboardingForm({
         <Input placeholder="First name" value={form.firstName} onChange={update("firstName")} />
         <Input placeholder="Last name" value={form.lastName} onChange={update("lastName")} />
       </div>
-      <div className="grid gap-3 md:grid-cols-2">
-        <Input placeholder="Permanent address" value={form.permanentAddress} onChange={update("permanentAddress")} />
-        <Input placeholder="Birthday" type="date" value={form.birthday} onChange={update("birthday")} />
-      </div>
+      <Input placeholder="Permanent address" value={form.permanentAddress} onChange={update("permanentAddress")} />
 
       {role === "active_brother" ? (
         <>

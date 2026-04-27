@@ -3,11 +3,16 @@ import { ExternalLink, FileText } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getActiveBrotherCoverLetters, getActiveBrothers } from "@/lib/supabase/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function ActivesPage() {
+  const authSupabase = createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await authSupabase.auth.getUser();
   const actives = await getActiveBrothers();
   const supabase = createSupabaseAdminClient();
   const coverLetters = await getActiveBrotherCoverLetters(actives.map((active) => active.id));
@@ -44,6 +49,11 @@ export default async function ActivesPage() {
       };
     }),
   );
+  const orderedRows = [...rows].sort((a, b) => {
+    if (user?.id && a.id === user.id && b.id !== user.id) return -1;
+    if (user?.id && b.id === user.id && a.id !== user.id) return 1;
+    return a.fullName.localeCompare(b.fullName);
+  });
 
   return (
     <div className="space-y-4">
@@ -72,9 +82,18 @@ export default async function ActivesPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((active) => (
+              {orderedRows.map((active) => (
                 <TableRow key={active.id}>
-                  <TableCell className="font-medium text-slate-950">{active.fullName}</TableCell>
+                  <TableCell className="font-medium text-slate-950">
+                    <div className="flex items-center gap-2">
+                      <span>{active.fullName}</span>
+                      {user?.id === active.id ? (
+                        <span className="rounded-full border border-[rgba(221,45,74,0.18)] bg-[rgba(221,45,74,0.08)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--brand-primary)]">
+                          You
+                        </span>
+                      ) : null}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     {active.linkedinUrl ? (
                       <Link
