@@ -10,9 +10,9 @@ export function Badge({ className, variant = "neutral", ...props }: BadgeProps) 
     <span
       className={cn(
         "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium",
-        variant === "neutral" && "bg-white/[0.07] text-stone-200",
-        variant === "success" && "border border-emerald-500/25 bg-emerald-500/10 text-emerald-300",
-        variant === "blue" && "border border-[#de4949]/30 bg-[#de4949]/14 text-[#ffd6d6]",
+        variant === "neutral" && "border border-slate-200 bg-slate-50 text-slate-700",
+        variant === "success" && "border border-emerald-500/20 bg-emerald-500/10 text-emerald-700",
+        variant === "blue" && "border border-[rgba(221,45,74,0.16)] bg-[rgba(221,45,74,0.08)] text-[var(--brand-primary)]",
         className,
       )}
       {...props}

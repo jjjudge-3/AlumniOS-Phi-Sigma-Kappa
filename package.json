@@ -12,7 +12,9 @@
     "lint": "next lint",
     "seed": "tsx prisma/seed.ts",
     "prisma:generate": "prisma generate",
-    "supabase:import-alumni": "tsx scripts/import-alumni-to-supabase.ts"
+    "supabase:import-alumni": "tsx scripts/import-alumni-to-supabase.ts",
+    "enrich:company-jobs:apify": "tsx scripts/run-company-job-postings-apify.ts",
+    "enrich:company-recruiting:openai": "tsx scripts/run-company-recruiting-analysis.ts"
   },
   "prisma": {
     "seed": "npm run seed"
@@ -21,6 +23,7 @@
     "@prisma/client": "^5.22.0",
     "@supabase/ssr": "^0.10.0",
     "@supabase/supabase-js": "^2.101.1",
+    "@trigger.dev/sdk": "^4.4.4",
     "clsx": "^2.1.1",
     "lucide-react": "^0.564.0",
     "next": "^14.2.32",
@@ -31,6 +34,7 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@trigger.dev/build": "^4.4.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

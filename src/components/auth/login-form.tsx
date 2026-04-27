@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { normalizeAuthError, normalizeAuthRedirect } from "@/lib/auth";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 export function LoginForm() {
@@ -15,23 +16,37 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const callbackError = searchParams.get("error");
+    if (callbackError) {
+      setError(normalizeAuthError(callbackError));
+    }
+  }, [searchParams]);
+
   return (
     <form
       className="space-y-4"
       onSubmit={async (event) => {
         event.preventDefault();
+        const trimmedEmail = email.trim().toLowerCase();
+
+        if (!trimmedEmail || !password) {
+          setError("Enter both your email and password.");
+          return;
+        }
+
         setLoading(true);
         setError(null);
         const supabase = createSupabaseBrowserClient();
-        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+        const { error: signInError } = await supabase.auth.signInWithPassword({ email: trimmedEmail, password });
 
         if (signInError) {
-          setError(signInError.message);
+          setError(normalizeAuthError(signInError.message));
           setLoading(false);
           return;
         }
 
-        router.push(searchParams.get("next") ?? "/dashboard");
+        router.push(normalizeAuthRedirect(searchParams.get("next"), "/dashboard"));
         router.refresh();
       }}
     >

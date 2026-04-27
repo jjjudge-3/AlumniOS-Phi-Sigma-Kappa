@@ -1,10 +1,43 @@
 import type { AlumniRow } from "@/lib/supabase/types";
 
-export function breakdown(items: AlumniRow[], key: keyof AlumniRow) {
+const STATE_MAP: Record<string, string> = {
+  ma: "Massachusetts",
+  massachusetts: "Massachusetts",
+  ca: "California",
+  california: "California",
+  ny: "New York",
+  "new york": "New York",
+  tx: "Texas",
+  texas: "Texas",
+  fl: "Florida",
+  florida: "Florida",
+  il: "Illinois",
+  illinois: "Illinois",
+  va: "Virginia",
+  virginia: "Virginia",
+  wa: "Washington",
+  washington: "Washington",
+  dc: "District of Columbia",
+  "district of columbia": "District of Columbia",
+};
+
+function normalizeStateValue(value: string) {
+  const normalized = value.trim().toLowerCase();
+  return STATE_MAP[normalized] ?? value.trim();
+}
+
+export function breakdown(
+  items: AlumniRow[],
+  key: keyof AlumniRow,
+  options?: {
+    normalizeState?: boolean;
+  },
+) {
   const counts = items.reduce<Record<string, number>>((acc, row) => {
     const value = row[key];
     if (typeof value !== "string" || !value) return acc;
-    acc[value] = (acc[value] ?? 0) + 1;
+    const normalizedValue = options?.normalizeState ? normalizeStateValue(value) : value;
+    acc[normalizedValue] = (acc[normalizedValue] ?? 0) + 1;
     return acc;
   }, {});
 

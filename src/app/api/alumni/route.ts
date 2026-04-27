@@ -9,9 +9,9 @@ export async function GET(req: NextRequest) {
   const filters = {
     search: params.get("search") ?? undefined,
     industry: params.get("industry") ?? undefined,
-    location: params.get("location") ?? undefined,
-    company: params.get("company") ?? undefined,
+    subIndustry: params.get("subIndustry") ?? undefined,
     jobFunction: params.get("jobFunction") ?? undefined,
+    linkedinOnly: params.get("linkedinOnly") ?? undefined,
   };
 
   const allRows = await getAlumni();
@@ -23,8 +23,7 @@ export async function GET(req: NextRequest) {
     alumni,
     options: {
       industries: unique(allRows.map((r) => r.company_industry).filter(Boolean)),
-      locations: unique(allRows.map((r) => r.location_state).filter(Boolean)),
-      companies: unique(allRows.map((r) => r.company_name).filter(Boolean)),
+      subIndustries: unique(allRows.map((r) => r.sub_industry).filter(Boolean)),
       jobFunctions: unique(allRows.map((r) => r.job_function).filter(Boolean)),
     },
   });

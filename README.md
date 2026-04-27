@@ -1,51 +1,85 @@
-# AlumniOS MVP
+# AlumniOS
 
-AlumniOS is a local demo SaaS platform for fraternity alumni search and opportunity analysis.
+AlumniOS is a Next.js + Supabase platform for fraternity alumni intelligence, company intelligence, and active-brother career workflows.
+
+## Current scope
+
+- Auth, signup, and onboarding for chapter users
+- Alumni directory with LinkedIn-enriched profiles
+- Company directory with alumni-company mapping
+- Company recruiting intelligence powered by OpenAI web search
+- Actives dashboard with resume and cover-letter sharing
 
 ## Stack
-- Next.js 14 (App Router)
+
+- Next.js 14
 - TypeScript
-- TailwindCSS
-- ShadCN-style UI components
-- Prisma + PostgreSQL
+- Tailwind CSS
+- Supabase Auth, Postgres, and Storage
+- Trigger.dev
+- OpenAI
+- Bright Data
+- Apify
 
 ## Run locally
 
 1. Install dependencies
+
 ```bash
 npm install
 ```
 
-2. Start PostgreSQL locally and ensure `DATABASE_URL` in `.env` is correct.
+2. Add environment variables in `.env.local` / `.env`
 
-3. Run migrations
-```bash
-npx prisma migrate dev --name init
-```
+Required app/runtime values:
 
-4. Seed data (50 fictional alumni)
-```bash
-npm run seed
-```
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
 
-5. Run app
+Current enrichment integrations used by the project:
+
+- `OPENAI_API_KEY`
+- `BRIGHTDATA_API_KEY`
+- `APIFY_API_TOKEN`
+
+3. Start the app
+
 ```bash
 npm run dev
 ```
 
-## Pages
-- `/login` mock login
+4. Create a production build
+
+```bash
+npm run build
+```
+
+## Main routes
+
+- `/login`
+- `/signup`
+- `/onboarding`
 - `/dashboard`
 - `/directory`
 - `/alumni/[id]`
-- `/internships`
-- `/industry`
-- `/locations`
+- `/companies`
+- `/companies/[id]`
+- `/internships-jobs`
+- `/actives`
+- `/profile`
 
-## Features
-- Seeded alumni dataset with realistic diversity
-- Dashboard analytics and charts (Recharts)
-- Directory search + filters + natural language parser
-- CSV export
-- Filter persistence in URL + localStorage
-- Internship, industry, and location intelligence views
+## Enrichment scripts
+
+```bash
+npm run enrich:company-jobs:apify
+npm run enrich:company-recruiting:openai
+```
+
+## Notes
+
+- Alumni enrichment and company enrichment persist to Supabase.
+- Resume and cover-letter uploads use the `resumes` storage bucket.
+- Recruiting intelligence is stored in `company_recruiting_analysis`.
+- This repo is ready for a small beta if the production Supabase and environment variables are configured correctly.

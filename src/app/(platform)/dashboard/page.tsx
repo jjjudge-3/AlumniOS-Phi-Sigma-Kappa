@@ -8,11 +8,13 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const alumni = await getAlumni();
-  const industryBreakdown = breakdown(alumni, "company_industry");
-  const locationBreakdown = breakdown(alumni, "location_state");
+  const linkedinValidated = alumni.filter((row) => row.linkedin_url);
+  const industryBreakdown = breakdown(linkedinValidated, "company_industry");
+  const locationBreakdown = breakdown(alumni, "location_state", { normalizeState: true });
   const companyBreakdown = topCompanies(alumni, 8).map((item) => ({ name: item.company, value: item.count }));
   const withEmailCount = alumni.filter((row) => row.work_email).length;
-  const withLinkedinCount = alumni.filter((row) => row.linkedin_url).length;
+  const withLinkedinCount = linkedinValidated.length;
+  const withLinkedinPercent = alumni.length ? Math.round((withLinkedinCount / alumni.length) * 100) : 0;
   const companyCount = new Set(alumni.map((row) => row.company_website ?? row.company_name).filter(Boolean)).size;
 
   return (
@@ -26,25 +28,26 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <CardDescription>Total Alumni</CardDescription>
-            <CardTitle className="text-3xl tracking-tight text-white">{alumni.length}</CardTitle>
+            <CardTitle className="text-3xl tracking-tight text-[var(--brand-deep)]">{alumni.length}</CardTitle>
           </CardHeader>
         </Card>
         <Card>
           <CardHeader>
             <CardDescription>Companies Represented</CardDescription>
-            <CardTitle className="text-3xl tracking-tight text-white">{companyCount}</CardTitle>
+            <CardTitle className="text-3xl tracking-tight text-[var(--brand-deep)]">{companyCount}</CardTitle>
           </CardHeader>
         </Card>
         <Card>
           <CardHeader>
             <CardDescription>Work Emails Available</CardDescription>
-            <CardTitle className="text-3xl tracking-tight text-white">{withEmailCount}</CardTitle>
+            <CardTitle className="text-3xl tracking-tight text-[var(--brand-deep)]">{withEmailCount}</CardTitle>
           </CardHeader>
         </Card>
         <Card>
           <CardHeader>
             <CardDescription>LinkedIn Profiles Mapped</CardDescription>
-            <CardTitle className="text-3xl tracking-tight text-white">{withLinkedinCount}</CardTitle>
+            <CardTitle className="text-3xl tracking-tight text-[var(--brand-deep)]">{withLinkedinCount}</CardTitle>
+            <p className="text-sm text-slate-500">{withLinkedinPercent}% of alumni</p>
           </CardHeader>
         </Card>
       </section>
@@ -53,6 +56,7 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>Industry Breakdown</CardTitle>
+            <CardDescription>LinkedIn-validated alumni only, grouped by role-based industry</CardDescription>
           </CardHeader>
           <CardContent>
             <PieBreakdown data={industryBreakdown} />

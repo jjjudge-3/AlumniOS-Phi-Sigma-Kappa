@@ -3,22 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --background: 6 12% 15%;
-  --foreground: 28 18% 94%;
-  --card: 10 10% 20%;
-  --card-foreground: 28 18% 95%;
-  --primary: 0 69% 58%;
-  --primary-foreground: 28 18% 96%;
-  --secondary: 15 7% 29%;
-  --secondary-foreground: 28 14% 88%;
-  --muted: 10 8% 24%;
-  --muted-foreground: 18 11% 72%;
-  --accent: 0 36% 30%;
-  --accent-foreground: 28 18% 95%;
-  --border: 0 0% 100% / 0.07;
-  --input: 0 0% 100% / 0.08;
-  --ring: 0 69% 58%;
-  --radius: 0.85rem;
+  --background: 0 0% 100%;
+  --foreground: 222 24% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 24% 14%;
+  --primary: 350 72% 52%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 17% 97%;
+  --secondary-foreground: 222 20% 18%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 350 72% 52%;
+  --accent-foreground: 0 0% 100%;
+  --border: 220 13% 88%;
+  --input: 220 14% 96%;
+  --ring: 350 72% 52%;
+  --radius: 0.8rem;
+  --brand-deep: #880d1e;
+  --brand-primary: #dd2d4a;
+  --brand-ice: #cbeef3;
+  --brand-black: #080808;
+  --brand-panel: #ffffff;
+  --brand-panel-2: #f8fafc;
 }
 
 * {
@@ -26,20 +32,17 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 ::selection {
-  background: rgba(222, 73, 73, 0.35);
-  color: #fff7f2;
+  background: rgba(221, 45, 74, 0.18);
+  color: #28050d;
 }
 
 body {
   @apply bg-background text-foreground antialiased;
-  background:
-    radial-gradient(circle at top left, rgba(222, 73, 73, 0.2), transparent 24%),
-    radial-gradient(circle at top right, rgba(210, 202, 198, 0.08), transparent 22%),
-    linear-gradient(180deg, #261f21 0%, #31282b 100%);
+  background: #f8fafc;
 }
 
 a {
@@ -47,17 +50,43 @@ a {
 }
 
 .app-panel {
-  @apply rounded-xl border border-white/[0.06] bg-[#352d30] shadow-[0_0_0_1px_rgba(255,255,255,0.02)];
+  @apply rounded-xl border bg-white shadow-sm;
+  border-color: hsl(var(--border));
 }
 
 .app-toolbar {
-  @apply rounded-xl border border-white/[0.06] bg-[#3a3235]/95 shadow-[0_0_0_1px_rgba(255,255,255,0.02)];
+  @apply rounded-xl border bg-[hsl(var(--secondary))] shadow-sm;
+  border-color: hsl(var(--border));
 }
 
 .page-title {
-  @apply text-3xl font-semibold tracking-tight text-slate-50;
+  @apply text-3xl font-semibold tracking-tight text-slate-950;
 }
 
 .page-subtitle {
-  @apply text-sm text-stone-300;
+  @apply text-sm text-slate-500;
+}
+
+.auth-shell {
+  background: #f8fafc;
+}
+
+.brand-link {
+  color: var(--brand-primary);
+}
+
+.brand-link:hover {
+  color: var(--brand-deep);
+}
+
+.brand-mark {
+  border: 1px solid rgba(221, 45, 74, 0.16);
+  background: rgba(221, 45, 74, 0.08);
+  color: var(--brand-primary);
+}
+
+.brand-pill {
+  border: 1px solid rgba(221, 45, 74, 0.14);
+  background: rgba(221, 45, 74, 0.06);
+  color: var(--brand-primary);
 }

@@ -21,8 +21,12 @@ export type AlumniRow = {
   company_website: string | null;
   company_logo_url: string | null;
   company_industry: string | null;
+  sub_industry: string | null;
   job_function: string | null;
   enriched_person_json: Record<string, unknown> | null;
+  profile_summary: string | null;
+  referral_power_score?: number | null;
+  referral_power_reason?: string | null;
   created_at: string;
   raw_record?: Record<string, unknown>;
 };
@@ -43,12 +47,25 @@ export type ActiveBrotherProfileRow = {
   id: string;
   profile_id: string;
   school_email: string;
+  linkedin_url: string | null;
+  hometown: string | null;
   major: string | null;
   graduation_year: number | null;
+  current_grade: string | null;
   chapter: string | null;
   career_interests: string | null;
   resume_storage_path: string | null;
   resume_file_name: string | null;
+  cover_letter_storage_path: string | null;
+  cover_letter_file_name: string | null;
+  created_at: string;
+};
+
+export type ActiveBrotherCoverLetterRow = {
+  id: string;
+  profile_id: string;
+  storage_path: string;
+  file_name: string;
   created_at: string;
 };
 

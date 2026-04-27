@@ -22,10 +22,10 @@ const highlights = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#261f21] text-stone-100">
-      <section className="border-b border-white/[0.06]">
+    <main className="min-h-screen bg-slate-50 text-slate-900">
+      <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="text-lg font-semibold tracking-tight">AlumniOS</div>
+          <div className="text-lg font-semibold tracking-tight text-slate-950">AlumniOS</div>
           <div className="flex items-center gap-3">
             <Link href="/login">
               <Button variant="ghost">Sign In</Button>
@@ -39,14 +39,14 @@ export default function HomePage() {
 
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
-          <div className="mb-4 inline-flex rounded-full border border-[#de4949]/20 bg-[#de4949]/12 px-3 py-1 text-xs text-[#ffd6d6]">
+          <div className="brand-pill mb-4 inline-flex rounded-full px-3 py-1 text-xs">
             Alumni directory infrastructure for fraternities
           </div>
-          <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-stone-50">
-            Build the alumni network into a real operating system for intros, recruiting, and long-term chapter value.
+          <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-slate-950">
+            The Most Advanced Alumni Intelligence Platform for Career Opportunities
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-300">
-            AlumniOS gives active brothers a secure directory, company intelligence, onboarding workflows, and structured alumni data powered by Supabase.
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+            Track where your alumni work, uncover hiring patterns, network for referrals, track internship and job openings in real time, and know exactly when and where to apply.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/signup">
@@ -62,19 +62,19 @@ export default function HomePage() {
         </div>
 
         <div className="app-panel p-6">
-          <div className="text-xs uppercase tracking-[0.18em] text-stone-400">What the product handles</div>
+          <div className="text-xs uppercase tracking-[0.18em] text-slate-500">What the product handles</div>
           <div className="mt-6 space-y-4">
             {highlights.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+                <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#de4949]/20 bg-[#de4949]/12">
-                      <Icon className="h-5 w-5 text-[#ffd6d6]" />
+                    <div className="brand-mark flex h-10 w-10 items-center justify-center rounded-xl">
+                      <Icon className="h-5 w-5" />
                     </div>
-                    <div className="font-medium text-stone-100">{item.title}</div>
+                    <div className="font-medium text-slate-950">{item.title}</div>
                   </div>
-                  <p className="mt-3 text-sm leading-7 text-stone-300">{item.description}</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
                 </div>
               );
             })}

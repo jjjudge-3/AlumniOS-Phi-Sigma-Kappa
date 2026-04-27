@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, UploadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { normalizeAuthRedirect } from "@/lib/auth";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import type { AppRole } from "@/lib/supabase/types";
 
@@ -18,6 +19,7 @@ export function OnboardingForm({
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = (searchParams.get("role") as AppRole | null) ?? "active_brother";
+  const next = normalizeAuthRedirect(searchParams.get("next"), "/dashboard");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
@@ -29,8 +31,11 @@ export function OnboardingForm({
     permanentAddress: "",
     birthday: "",
     schoolEmail: "",
+    linkedinUrl: "",
+    hometown: "",
     major: "",
     graduationYear: "",
+    currentGrade: "",
     chapter: "",
     careerInterests: "",
     preferredEmail: email ?? "",
@@ -59,6 +64,16 @@ export function OnboardingForm({
       className="space-y-4"
       onSubmit={async (event) => {
         event.preventDefault();
+        if (!form.firstName.trim() || !form.lastName.trim()) {
+          setError("Add your first and last name to finish onboarding.");
+          return;
+        }
+
+        if (role === "active_brother" && !form.schoolEmail.trim()) {
+          setError("School email is required for active brother accounts.");
+          return;
+        }
+
         setLoading(true);
         setError(null);
         setWarning(null);
@@ -68,6 +83,13 @@ export function OnboardingForm({
         let resumeFileName: string | null = null;
 
         if (role === "active_brother" && resumeFile) {
+          const fileName = resumeFile.name.toLowerCase();
+          if (!fileName.endsWith(".pdf") && resumeFile.type !== "application/pdf") {
+            setError("Resume uploads must be PDF files.");
+            setLoading(false);
+            return;
+          }
+
           const bucketResponse = await fetch("/api/setup/resume-bucket", { method: "POST" });
           if (!bucketResponse.ok) {
             const bucketPayload = (await bucketResponse.json().catch(() => null)) as { error?: string } | null;
@@ -99,11 +121,11 @@ export function OnboardingForm({
           id: userId,
           role,
           email,
-          first_name: form.firstName,
-          last_name: form.lastName,
+          first_name: form.firstName.trim(),
+          last_name: form.lastName.trim(),
           permanent_address: form.permanentAddress || null,
           birthday: form.birthday || null,
-          onboarding_complete: true,
+          onboarding_complete: false,
         });
 
         if (profileError) {
@@ -113,16 +135,22 @@ export function OnboardingForm({
         }
 
         if (role === "active_brother") {
-          const { error: activeBrotherError } = await supabase.from("active_brother_profiles").upsert({
-            profile_id: userId,
-            school_email: form.schoolEmail,
-            major: form.major || null,
-            graduation_year: form.graduationYear ? Number(form.graduationYear) : null,
-            chapter: form.chapter || null,
-            career_interests: form.careerInterests || null,
-            resume_storage_path: resumePath,
-            resume_file_name: resumeFileName,
-          });
+          const { error: activeBrotherError } = await supabase.from("active_brother_profiles").upsert(
+            {
+              profile_id: userId,
+              school_email: form.schoolEmail.trim(),
+              linkedin_url: form.linkedinUrl.trim() || null,
+              hometown: form.hometown.trim() || null,
+              major: form.major || null,
+              graduation_year: form.graduationYear ? Number(form.graduationYear) : null,
+              current_grade: form.currentGrade || null,
+              chapter: form.chapter || null,
+              career_interests: form.careerInterests || null,
+              resume_storage_path: resumePath,
+              resume_file_name: resumeFileName,
+            },
+            { onConflict: "profile_id" },
+          );
 
           if (activeBrotherError) {
             setError(normalizeSupabaseError(activeBrotherError.message));
@@ -130,13 +158,16 @@ export function OnboardingForm({
             return;
           }
         } else {
-          const { error: alumniError } = await supabase.from("alumni_user_profiles").upsert({
-            profile_id: userId,
-            preferred_email: form.preferredEmail || null,
-            graduation_year: form.graduationYear ? Number(form.graduationYear) : null,
-            company_name: form.companyName || null,
-            job_title: form.jobTitle || null,
-          });
+          const { error: alumniError } = await supabase.from("alumni_user_profiles").upsert(
+            {
+              profile_id: userId,
+              preferred_email: form.preferredEmail.trim() || null,
+              graduation_year: form.graduationYear ? Number(form.graduationYear) : null,
+              company_name: form.companyName || null,
+              job_title: form.jobTitle || null,
+            },
+            { onConflict: "profile_id" },
+          );
 
           if (alumniError) {
             setError(normalizeSupabaseError(alumniError.message));
@@ -145,7 +176,18 @@ export function OnboardingForm({
           }
         }
 
-        router.push("/dashboard");
+        const { error: profileFinalizeError } = await supabase
+          .from("profiles")
+          .update({ onboarding_complete: true })
+          .eq("id", userId);
+
+        if (profileFinalizeError) {
+          setError(normalizeSupabaseError(profileFinalizeError.message));
+          setLoading(false);
+          return;
+        }
+
+        router.push(next);
         router.refresh();
       }}
     >
@@ -162,23 +204,39 @@ export function OnboardingForm({
         <>
           <Input placeholder="School email" type="email" value={form.schoolEmail} onChange={update("schoolEmail")} />
           <div className="grid gap-3 md:grid-cols-2">
+            <Input placeholder="LinkedIn URL" type="url" value={form.linkedinUrl} onChange={update("linkedinUrl")} />
+            <Input placeholder="Hometown" value={form.hometown} onChange={update("hometown")} />
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
             <Input placeholder="Major" value={form.major} onChange={update("major")} />
             <Input placeholder="Graduation year" type="number" value={form.graduationYear} onChange={update("graduationYear")} />
+            <select
+              className="flex h-10 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              value={form.currentGrade}
+              onChange={update("currentGrade")}
+            >
+              <option value="">Current grade</option>
+              <option value="Freshman">Freshman</option>
+              <option value="Sophomore">Sophomore</option>
+              <option value="Junior">Junior</option>
+              <option value="Senior">Senior</option>
+              <option value="Graduate Student">Graduate Student</option>
+            </select>
           </div>
           <Input placeholder="Chapter" value={form.chapter} onChange={update("chapter")} />
           <textarea
-            className="flex min-h-[120px] w-full rounded-lg border border-white/8 bg-[#40373a] px-3 py-2 text-sm text-stone-100 placeholder:text-stone-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex min-h-[120px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             placeholder="Career interests, target industries, target companies, or networking goals"
             value={form.careerInterests}
             onChange={update("careerInterests")}
           />
-          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-white/10 bg-white/[0.02] px-4 py-4 text-sm text-slate-300">
-            <UploadCloud className="h-4 w-4 text-stone-300" />
-            <span>{resumeFile ? resumeFile.name : "Upload resume (PDF or DOC)"}</span>
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-4 text-sm text-slate-700">
+            <UploadCloud className="h-4 w-4 text-slate-500" />
+            <span>{resumeFile ? resumeFile.name : "Upload resume (PDF only)"}</span>
             <input
               className="hidden"
               type="file"
-              accept=".pdf,.doc,.docx"
+              accept=".pdf,application/pdf"
               onChange={(event) => setResumeFile(event.target.files?.[0] ?? null)}
             />
           </label>
@@ -194,8 +252,8 @@ export function OnboardingForm({
         </>
       )}
 
-      {warning ? <p className="text-sm text-amber-200">{warning}</p> : null}
-      {error ? <p className="text-sm text-red-300">{error}</p> : null}
+      {warning ? <p className="text-sm text-amber-700">{warning}</p> : null}
+      {error ? <p className="text-sm text-red-600">{error}</p> : null}
       <Button className="w-full gap-2" disabled={loading} type="submit">
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
         Finish Onboarding

@@ -3,35 +3,28 @@ import type { AlumniRow } from "@/lib/supabase/types";
 export type AlumniFilters = {
   search?: string;
   industry?: string;
-  location?: string;
-  company?: string;
+  subIndustry?: string;
   jobFunction?: string;
+  linkedinOnly?: string;
 };
 
 export function applyAlumniFilters(rows: AlumniRow[], filters: AlumniFilters) {
   return rows.filter((row) => {
     const matchesSearch =
       !filters.search ||
-      [
-        row.full_name,
-        row.company_name,
-        row.job_title,
-        row.work_email,
-        row.location,
-      ]
-        .filter(Boolean)
-        .some((value) => value?.toLowerCase().includes(filters.search!.toLowerCase()));
-
+      row.full_name.toLowerCase().includes(filters.search.toLowerCase());
     const matchesIndustry =
       !filters.industry || filters.industry === "all" || row.company_industry === filters.industry;
-    const matchesLocation =
-      !filters.location || filters.location === "all" || row.location_state === filters.location;
-    const matchesCompany =
-      !filters.company || filters.company === "all" || row.company_name === filters.company;
+    const matchesSubIndustry =
+      !filters.subIndustry || filters.subIndustry === "all" || row.sub_industry === filters.subIndustry;
     const matchesFunction =
       !filters.jobFunction || filters.jobFunction === "all" || row.job_function === filters.jobFunction;
+    const matchesLinkedin =
+      !filters.linkedinOnly ||
+      filters.linkedinOnly === "all" ||
+      (filters.linkedinOnly === "yes" && !!row.linkedin_url);
 
-    return matchesSearch && matchesIndustry && matchesLocation && matchesCompany && matchesFunction;
+    return matchesSearch && matchesIndustry && matchesSubIndustry && matchesFunction && matchesLinkedin;
   });
 }
 
@@ -77,34 +70,6 @@ export function parseNaturalLanguage(input: string): Partial<AlumniFilters> {
   for (const fn of functions) {
     if (text.includes(fn)) {
       parsed.jobFunction = titleize(fn);
-      break;
-    }
-  }
-
-  const stateMatches: Record<string, string> = {
-    california: "California",
-    massachusetts: "Massachusetts",
-    florida: "Florida",
-    texas: "Texas",
-    "new york": "New York",
-    illinois: "Illinois",
-    virginia: "Virginia",
-    washington: "Washington",
-    seattle: "Washington",
-    boston: "Massachusetts",
-    chicago: "Illinois",
-    austin: "Texas",
-    "washington dc": "District of Columbia",
-    dc: "District of Columbia",
-    "los angeles": "California",
-    la: "California",
-    sf: "California",
-    "san francisco": "California",
-  };
-
-  for (const [needle, value] of Object.entries(stateMatches)) {
-    if (text.includes(needle)) {
-      parsed.location = value;
       break;
     }
   }
@@ -170,6 +135,7 @@ export function summarizeEnrichedPerson(data: Record<string, unknown> | null) {
     "current_role",
     "current_company",
     "industry",
+    "sub_industry",
     "location",
     "education",
     "skills",

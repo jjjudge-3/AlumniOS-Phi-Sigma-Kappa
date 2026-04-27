@@ -82,7 +82,7 @@ export default async function LocationsPage() {
                     <TableCell>{row.state}</TableCell>
                     <TableCell>{row.alumni}</TableCell>
                     <TableCell>{row.companies}</TableCell>
-                    <TableCell className={row.emailCoverage > 5 ? "bg-emerald-500/10 text-emerald-300" : row.emailCoverage > 0 ? "bg-[#de4949]/14 text-[#ffd6d6]" : "text-stone-400"}>
+                    <TableCell className={row.emailCoverage > 5 ? "bg-emerald-500/10 text-emerald-300" : row.emailCoverage > 0 ? "bg-[rgba(203,238,243,0.12)] text-[var(--brand-ice)]" : "text-stone-400"}>
                       {row.emailCoverage}
                     </TableCell>
                   </TableRow>

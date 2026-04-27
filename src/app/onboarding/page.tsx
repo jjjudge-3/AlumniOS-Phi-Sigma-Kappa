@@ -16,12 +16,12 @@ export default async function OnboardingPage() {
   if (profile?.onboarding_complete) redirect("/dashboard");
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#261f21] p-4">
+    <div className="auth-shell flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardDescription>Onboarding</CardDescription>
-          <CardTitle className="text-2xl tracking-tight text-white">Complete your AlumniOS profile</CardTitle>
-          <p className="text-sm text-stone-300">We use this information to tailor the member experience and connect the right people to the right alumni.</p>
+          <CardTitle className="text-2xl tracking-tight text-slate-950">Complete your AlumniOS profile</CardTitle>
+          <p className="text-sm text-slate-600">We use this information to tailor the member experience and connect the right people to the right alumni.</p>
         </CardHeader>
         <CardContent>
           <OnboardingForm userId={user.id} email={user.email ?? null} />

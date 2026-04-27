@@ -23,8 +23,11 @@ create table if not exists public.alumni (
   company_industry text,
   job_function text,
   enriched_person_json jsonb,
+  profile_summary text,
   created_at timestamptz not null default now()
 );
+
+alter table public.alumni add column if not exists profile_summary text;
 
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
@@ -45,14 +48,25 @@ create table if not exists public.active_brother_profiles (
   id uuid primary key default gen_random_uuid(),
   profile_id uuid not null unique references public.profiles(id) on delete cascade,
   school_email text not null,
+  linkedin_url text,
+  hometown text,
   major text,
   graduation_year integer,
+  current_grade text,
   chapter text,
   career_interests text,
   resume_storage_path text,
   resume_file_name text,
+  cover_letter_storage_path text,
+  cover_letter_file_name text,
   created_at timestamptz not null default now()
 );
+
+alter table public.active_brother_profiles add column if not exists linkedin_url text;
+alter table public.active_brother_profiles add column if not exists hometown text;
+alter table public.active_brother_profiles add column if not exists current_grade text;
+alter table public.active_brother_profiles add column if not exists cover_letter_storage_path text;
+alter table public.active_brother_profiles add column if not exists cover_letter_file_name text;
 
 create table if not exists public.alumni_user_profiles (
   id uuid primary key default gen_random_uuid(),
@@ -157,3 +171,79 @@ using (
   bucket_id = 'resumes'
   and (storage.foldername(name))[1] = auth.uid()::text
 );
+
+create table if not exists public.company_job_postings (
+  id uuid primary key default gen_random_uuid(),
+  company_id uuid not null references public.companies(id) on delete cascade,
+  title text not null,
+  department text,
+  location text,
+  employment_type text,
+  seniority_level text,
+  is_internship boolean not null default false,
+  is_entry_level boolean not null default false,
+  is_new_grad boolean not null default false,
+  apply_url text,
+  posting_url text,
+  source text not null default 'apify',
+  source_job_id text,
+  posted_at timestamptz,
+  first_seen_at timestamptz not null default now(),
+  last_seen_at timestamptz not null default now(),
+  status text not null default 'active',
+  raw_job_json jsonb,
+  normalized_job_json jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists company_job_postings_company_id_idx
+  on public.company_job_postings (company_id);
+
+create index if not exists company_job_postings_status_idx
+  on public.company_job_postings (status);
+
+create unique index if not exists company_job_postings_source_unique
+  on public.company_job_postings (company_id, source, source_job_id);
+
+create table if not exists public.company_recruiting_analysis (
+  id uuid primary key default gen_random_uuid(),
+  company_id uuid not null unique references public.companies(id) on delete cascade,
+  internship_program_exists text,
+  entry_level_hiring_exists text,
+  likely_recruiting_window text,
+  recruiting_cycle_confidence text,
+  recruiting_cycle_reason text,
+  best_time_to_apply text,
+  hiring_intensity text,
+  entry_level_friendliness text,
+  common_roles_hired text[],
+  recommended_alumni_contacts text[],
+  job_market_signal text,
+  analysis_summary text,
+  cited_sources jsonb,
+  raw_analysis_json jsonb,
+  last_analyzed_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create or replace function public.set_updated_at()
+returns trigger
+language plpgsql
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+drop trigger if exists set_company_job_postings_updated_at on public.company_job_postings;
+create trigger set_company_job_postings_updated_at
+before update on public.company_job_postings
+for each row execute function public.set_updated_at();
+
+drop trigger if exists set_company_recruiting_analysis_updated_at on public.company_recruiting_analysis;
+create trigger set_company_recruiting_analysis_updated_at
+before update on public.company_recruiting_analysis
+for each row execute function public.set_updated_at();

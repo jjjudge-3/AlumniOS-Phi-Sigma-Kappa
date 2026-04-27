@@ -10,9 +10,9 @@ export async function GET(req: NextRequest) {
   const filters = {
     search: params.get("search") ?? undefined,
     industry: params.get("industry") ?? undefined,
-    location: params.get("location") ?? undefined,
-    company: params.get("company") ?? undefined,
+    subIndustry: params.get("subIndustry") ?? undefined,
     jobFunction: params.get("jobFunction") ?? undefined,
+    linkedinOnly: params.get("linkedinOnly") ?? undefined,
   };
 
   const rows = applyAlumniFilters(await getAlumni(), filters);
@@ -25,9 +25,12 @@ export async function GET(req: NextRequest) {
       company: row.company_name,
       jobTitle: row.job_title,
       industry: row.company_industry,
+      subIndustry: row.sub_industry,
       function: row.job_function,
       location: [row.location_city, row.location_state].filter(Boolean).join(", ") || row.location,
       workEmail: row.work_email,
+      referralPowerScore: row.referral_power_score,
+      referralPowerReason: row.referral_power_reason,
       linkedinUrl: row.linkedin_url,
       college: row.college,
       companyDomain: row.company_website,

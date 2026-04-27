@@ -1,11 +1,19 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { normalizeAuthRedirect } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = requestUrl.searchParams.get("next") ?? "/dashboard";
+  const errorDescription = requestUrl.searchParams.get("error_description");
+  const next = normalizeAuthRedirect(requestUrl.searchParams.get("next"), "/dashboard");
+
+  if (errorDescription) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("error", errorDescription);
+    return NextResponse.redirect(loginUrl);
+  }
 
   const response = NextResponse.redirect(new URL(next, request.url));
   const cookieStore = cookies();
@@ -31,7 +39,12 @@ export async function GET(request: NextRequest) {
   );
 
   if (code) {
-    await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("error", error.message);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   return response;
