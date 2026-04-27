@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { normalizeAuthError, normalizeAuthRedirect } from "@/lib/auth";
@@ -88,16 +88,28 @@ export function SignupForm() {
         {roles.map((item) => (
           <button
             key={item.value}
-            className={`w-full rounded-xl border px-4 py-3 text-left transition-colors ${
+            className={`w-full rounded-xl border px-5 py-4 text-left transition-all ${
               role === item.value
-                ? "border-[rgba(203,238,243,0.2)] bg-[rgba(203,238,243,0.1)] text-white"
-                : "border-white/8 bg-white/[0.02] text-stone-300 hover:bg-[rgba(203,238,243,0.06)]"
+                ? "border-[rgba(221,45,74,0.28)] bg-[rgba(221,45,74,0.08)] shadow-[0_0_0_1px_rgba(221,45,74,0.1)]"
+                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
             }`}
             onClick={() => setRole(item.value)}
             type="button"
           >
-            <div className="font-medium">{item.label}</div>
-            <div className="mt-1 text-sm text-stone-300">{item.description}</div>
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className={`font-semibold ${role === item.value ? "text-slate-950" : "text-slate-800"}`}>{item.label}</div>
+                <div className={`mt-1 text-sm leading-7 ${role === item.value ? "text-slate-700" : "text-slate-500"}`}>
+                  {item.description}
+                </div>
+              </div>
+              {role === item.value ? (
+                <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(221,45,74,0.2)] bg-white px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--brand-primary)]">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  Selected
+                </span>
+              ) : null}
+            </div>
           </button>
         ))}
       </div>
