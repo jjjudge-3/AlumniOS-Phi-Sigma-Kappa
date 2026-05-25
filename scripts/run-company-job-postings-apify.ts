@@ -2,9 +2,12 @@ import { createSupabaseAdminClient } from "@/lib/supabase-admin";
 
 const COMPANY_RELATION = "companies";
 const JOB_POSTINGS_RELATION = "company_job_postings";
-const PAGE_SIZE = Number(process.env.APIFY_COMPANY_JOBS_PAGE_SIZE ?? "10");
+const PAGE_SIZE = Number(process.env.APIFY_COMPANY_JOBS_PAGE_SIZE ?? "3");
 const APIFY_BASE_URL = "https://api.apify.com/v2";
-const APIFY_SOURCE = "apify";
+const DEFAULT_ACTOR_ID = "agentx/all-jobs-scraper";
+const LEGACY_ACTOR_ID = "memo23/apify-linkedin-search-results-scraper";
+const APIFY_SOURCE = "apify-all-jobs";
+const MIN_RESULTS_PER_QUERY = 10;
 
 type CompanyRow = {
   id: string;
@@ -12,6 +15,7 @@ type CompanyRow = {
   company_domain: string | null;
   company_website: string | null;
   company_linkedin_url: string | null;
+  raw_company_json?: Record<string, unknown> | null;
 };
 
 type ActorRunResponse = {
@@ -23,39 +27,81 @@ type ActorRunResponse = {
 };
 
 type ExtractedJob = {
-  company_id?: string;
-  company_name?: string;
-  companyName?: string;
+  id?: string;
+  platform?: string;
+  platform_url?: string;
+  official_url?: string;
   title?: string;
   description?: string;
   location?: string;
-  companyLocation?: string;
-  employment_type?: string;
-  employmentType?: string;
-  experience_level?: string;
-  experienceLevel?: string;
-  salary_range?: string;
-  salary?: string;
-  department?: string;
-  jobFunction?: string;
-  requirements?: string[];
-  benefits?: string[];
-  source_url?: string;
-  sourceUrl?: string;
-  application_url?: string;
-  applyUrl?: string;
-  posted_at?: string;
-  listedAt?: string;
-  workplace_type?: string;
-  company?: string;
-  url?: string;
-  criteria?: Array<{ title?: string; value?: string }>;
-  confidence?: number;
-  relevance?: string;
-  ats_system?: string;
-  extracted_at?: string;
-  id?: string;
+  job_type?: string;
+  job_level?: string;
+  job_function?: string;
+  posted_date?: string;
+  company_name?: string;
+  company_url?: string;
+  company_website?: string;
+  company_industry?: string;
+  company_logo?: string;
+  salary_period?: string;
+  salary_minimum?: number | null;
+  salary_maximum?: number | null;
+  salary_currency?: string;
+  is_remote?: boolean;
+  processed_at?: string;
 };
+
+type NormalizedPosting = {
+  title: string | null;
+  description: string | null;
+  department: string | null;
+  location: string | null;
+  employmentType: string | null;
+  seniorityLevel: string | null;
+  isInternship: boolean;
+  isEntryLevel: boolean;
+  isNewGrad: boolean;
+  applyUrl: string | null;
+  postingUrl: string | null;
+  sourceJobId: string;
+  postedAt: string | null;
+  companyName: string | null;
+  workplaceType: string | null;
+  confidence: number | null;
+  salaryRange: string | null;
+  benefits: string[] | null;
+  requirements: string[] | null;
+  relevance: string | null;
+  atsSystem: string | null;
+};
+
+type QueryPlan = {
+  keyword: string;
+  variant: string;
+};
+
+type PostingRow = {
+  company_id: string;
+  title: string;
+  department: string | null;
+  location: string | null;
+  employment_type: string | null;
+  seniority_level: string | null;
+  is_internship: boolean;
+  is_entry_level: boolean;
+  is_new_grad: boolean;
+  apply_url: string | null;
+  posting_url: string | null;
+  source: string;
+  source_job_id: string;
+  posted_at: string | null;
+  last_seen_at: string;
+  status: string;
+  raw_job_json: ExtractedJob;
+  normalized_job_json: NormalizedPosting;
+};
+
+const EXCLUDED_TITLE_PATTERNS = [/\bconference\b/i, /\bsummit\b/i, /\bwebinar\b/i, /\bworkshop\b/i, /\binfo session\b/i];
 
 function getRequiredEnv(name: string) {
   const value = process.env[name];
@@ -63,12 +109,6 @@ function getRequiredEnv(name: string) {
     throw new Error(`Missing required environment variable: ${name}`);
   }
   return value;
-}
-
-function normalizeUrl(value: string | null) {
-  if (!value) return null;
-  if (value.startsWith("http://") || value.startsWith("https://")) return value;
-  return `https://${value}`;
 }
 
 function slugify(value: string | null) {
@@ -93,28 +133,90 @@ function safeJsonParse<T>(value: string | undefined, fallback: T) {
   }
 }
 
-function buildActorInput(companies: CompanyRow[]) {
-  const keywords = safeJsonParse<string[]>(
-    process.env.APIFY_LINKEDIN_JOB_KEYWORDS,
-    ["intern", "internship", "new grad", "entry level", "analyst", "associate"],
-  );
+function normalizeCompanyName(value: string | null) {
+  return (value ?? "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/\b(the|inc|incorporated|llc|l\.l\.c|llp|l\.l\.p|lp|ltd|limited|corp|corporation|co|company|plc)\b/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
+function isCompanyMatch(candidate: string | null, expected: CompanyRow) {
+  const normalizedCandidate = normalizeCompanyName(candidate);
+  const normalizedExpected = normalizeCompanyName(expected.company_name ?? expected.company_domain ?? expected.id);
+
+  if (!normalizedCandidate || !normalizedExpected) return false;
+  if (normalizedCandidate === normalizedExpected) return true;
+
+  const expectedTokens = new Set(normalizedExpected.split(" ").filter(Boolean));
+  const candidateTokens = new Set(normalizedCandidate.split(" ").filter(Boolean));
+
+  if (expectedTokens.size === 0 || candidateTokens.size === 0) return false;
+
+  let sharedTokens = 0;
+  for (const token of expectedTokens) {
+    if (candidateTokens.has(token)) sharedTokens += 1;
+  }
+
+  return sharedTokens === expectedTokens.size;
+}
+
+function buildQueryPlan(company: CompanyRow) {
+  const baseName = company.company_name?.trim() ?? company.company_domain?.trim() ?? company.id;
+  const configuredRegions = safeJsonParse<string[]>(
+    process.env.APIFY_COMPANY_JOB_REGIONS,
+    ["New York", "Boston", "Massachusetts", "Connecticut"],
+  )
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  const plans: QueryPlan[] = [{ keyword: baseName, variant: "base" }];
+  const includeRegionalFallbacks = process.env.APIFY_COMPANY_JOB_USE_REGION_FALLBACKS !== "false";
+
+  if (includeRegionalFallbacks) {
+    for (const region of configuredRegions) {
+      plans.push({
+        keyword: `${baseName} ${region} internship`,
+        variant: `region:${region}`,
+      });
+    }
+  }
+
+  return plans;
+}
+
+function buildActorInput(keyword: string) {
   return {
-    keywords,
-    companyNames: companies.map((company) => company.company_name ?? company.company_domain ?? company.id),
-    location: process.env.APIFY_LINKEDIN_JOB_LOCATION ?? "United States",
-    timeRange: process.env.APIFY_LINKEDIN_JOB_TIME_RANGE ?? "r2592000",
-    maxItems: Number(process.env.APIFY_LINKEDIN_JOB_MAX_ITEMS ?? "250"),
-    minDelay: Number(process.env.APIFY_LINKEDIN_JOB_MIN_DELAY ?? "5"),
-    maxDelay: Number(process.env.APIFY_LINKEDIN_JOB_MAX_DELAY ?? "10"),
-    maxConcurrency: Number(process.env.APIFY_LINKEDIN_JOB_MAX_CONCURRENCY ?? "2"),
-    minConcurrency: Number(process.env.APIFY_LINKEDIN_JOB_MIN_CONCURRENCY ?? "1"),
-    maxRequestRetries: Number(process.env.APIFY_LINKEDIN_JOB_MAX_RETRIES ?? "8"),
-    proxy: {
-      useApifyProxy: true,
-      apifyProxyGroups: ["RESIDENTIAL"],
-    },
+    country: process.env.APIFY_JOB_COUNTRY ?? "United States",
+    currency: process.env.APIFY_JOB_CURRENCY ?? "USD",
+    distance: Number(process.env.APIFY_JOB_DISTANCE ?? "200"),
+    job_type: process.env.APIFY_JOB_TYPE ?? "all",
+    keyword,
+    max_results: Math.max(Number(process.env.APIFY_JOB_MAX_RESULTS ?? "10"), MIN_RESULTS_PER_QUERY),
+    posted_since: process.env.APIFY_JOB_POSTED_SINCE ?? "6 months",
+    remote_only: process.env.APIFY_JOB_REMOTE_ONLY === "true",
   };
+}
+
+function allowedPlatforms() {
+  return new Set(
+    safeJsonParse<string[]>(
+      process.env.APIFY_COMPANY_JOB_ALLOWED_PLATFORMS,
+      ["LinkedIn", "Indeed", "Glassdoor", "ZipRecruiter"],
+    )
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean),
+  );
+}
+
+function resolveActorId() {
+  const configured = process.env.APIFY_COMPANY_JOBS_ACTOR_ID?.trim();
+  if (!configured || configured === LEGACY_ACTOR_ID) {
+    return DEFAULT_ACTOR_ID;
+  }
+  return configured;
 }
 
 async function runActor(actorId: string, input: Record<string, unknown>) {
@@ -167,34 +269,33 @@ async function fetchDatasetItems(datasetId: string) {
   return parsed.filter((item): item is ExtractedJob => !!item && typeof item === "object" && !Array.isArray(item));
 }
 
-function normalizePosting(job: ExtractedJob) {
+function normalizePosting(job: ExtractedJob): NormalizedPosting {
   const title = job.title?.trim() ?? null;
-  const sourceUrl = job.source_url?.trim() ?? job.sourceUrl?.trim() ?? job.url?.trim() ?? null;
-  const applicationUrl = job.application_url?.trim() ?? job.applyUrl?.trim() ?? null;
-  const criteria = Array.isArray(job.criteria) ? job.criteria : [];
-  const criteriaValue = (label: string) =>
-    criteria.find((item) => item.title?.toLowerCase() === label.toLowerCase())?.value?.trim() ?? null;
-  const employmentType = job.employment_type?.trim() ?? job.employmentType?.trim() ?? criteriaValue("Employment type");
-  const experienceLevel = job.experience_level?.trim() ?? job.experienceLevel?.trim() ?? criteriaValue("Seniority level");
-  const location = job.location?.trim() ?? job.companyLocation?.trim() ?? null;
+  const sourceUrl = job.platform_url?.trim() ?? null;
+  const applicationUrl = job.official_url?.trim() || sourceUrl;
+  const employmentType = job.job_type?.trim() ?? null;
+  const seniorityLevel = job.job_level?.trim() ?? null;
+  const location = job.location?.trim() ?? null;
   const description = job.description?.trim() ?? null;
-  const department = job.department?.trim() ?? job.jobFunction?.trim() ?? criteriaValue("Job function");
-  const salaryRange = job.salary_range?.trim() ?? job.salary?.trim() ?? null;
+  const department = job.job_function?.trim() ?? null;
+  const salaryRange =
+    job.salary_minimum != null || job.salary_maximum != null
+      ? [job.salary_currency, job.salary_minimum, job.salary_maximum].filter((value) => value != null).join(" ")
+      : null;
 
-  const combinedText = [title, employmentType, experienceLevel, description].filter(Boolean).join(" ");
-  const isInternship =
-    inferBooleanFromText(combinedText, [/intern/i, /internship/i, /\bco-op\b/i]) ||
-    /intern/i.test(employmentType ?? "");
+  const combinedText = [title, employmentType, seniorityLevel, description].filter(Boolean).join(" ");
+  const isInternship = inferBooleanFromText(combinedText, [/\binternship\b/i, /\bintern\b/i, /\bco-op\b/i, /\bco op\b/i]);
   const isNewGrad = inferBooleanFromText(combinedText, [/new grad/i, /graduate/i, /campus/i, /entry level/i]);
   const isEntryLevel =
     isInternship ||
     isNewGrad ||
     inferBooleanFromText(combinedText, [/\bjunior\b/i, /\banalyst\b/i, /\bassociate\b/i, /\bcoordinator\b/i]);
 
+  const companyName = job.company_name?.trim() ?? null;
   const sourceJobId =
     sourceUrl ??
     applicationUrl ??
-    slugify(`${job.company_id}-${title ?? "job"}-${location ?? ""}-${job.posted_at ?? ""}`);
+    slugify(`${companyName ?? "company"}-${title ?? "job"}-${location ?? ""}-${job.posted_date ?? ""}`);
 
   return {
     title,
@@ -202,31 +303,76 @@ function normalizePosting(job: ExtractedJob) {
     department,
     location,
     employmentType,
-    seniorityLevel: experienceLevel,
+    seniorityLevel,
     isInternship,
     isEntryLevel,
     isNewGrad,
     applyUrl: applicationUrl,
     postingUrl: sourceUrl,
     sourceJobId,
-    postedAt: job.posted_at ?? null,
-    companyName: job.company_name?.trim() ?? job.companyName?.trim() ?? job.company?.trim() ?? null,
-    workplaceType: job.workplace_type ?? null,
-    confidence: typeof job.confidence === "number" ? job.confidence : null,
+    postedAt: job.posted_date ?? null,
+    companyName,
+    workplaceType: job.is_remote ? "Remote" : null,
+    confidence: null,
     salaryRange,
-    benefits: Array.isArray(job.benefits) ? job.benefits : null,
-    requirements: Array.isArray(job.requirements) ? job.requirements : null,
-    relevance: job.relevance ?? null,
-    atsSystem: job.ats_system ?? null,
+    benefits: null,
+    requirements: null,
+    relevance: job.platform ?? null,
+    atsSystem: null,
+  };
+}
+
+async function fetchJobsForCompany(actorId: string, company: CompanyRow) {
+  const plans = buildQueryPlan(company);
+  const collected = new Map<string, ExtractedJob>();
+  const matchedVariants = new Set<string>();
+  const platformAllowlist = allowedPlatforms();
+
+  for (const plan of plans) {
+    const run = await runActor(actorId, buildActorInput(plan.keyword));
+    const datasetId = run.data?.defaultDatasetId;
+
+    if (!datasetId) {
+      throw new Error(`Apify run did not return a defaultDatasetId for ${company.company_name ?? company.id}`);
+    }
+
+    const items = await fetchDatasetItems(datasetId);
+    const matchingItems = items.filter((item) => {
+      const normalizedPlatform = item.platform?.trim().toLowerCase() ?? "";
+      if (!platformAllowlist.has(normalizedPlatform)) return false;
+      if (!isCompanyMatch(item.company_name ?? null, company)) return false;
+      if (EXCLUDED_TITLE_PATTERNS.some((pattern) => pattern.test(item.title ?? ""))) return false;
+      return true;
+    });
+
+    for (const item of matchingItems) {
+      const key = item.platform_url?.trim() || item.official_url?.trim() || `${item.company_name}-${item.title}-${item.posted_date}`;
+      collected.set(key, item);
+    }
+
+    if (matchingItems.some((item) => inferBooleanFromText(item.title ?? item.description ?? null, [/intern/i, /internship/i, /new grad/i, /entry level/i, /analyst/i, /associate/i]))) {
+      matchedVariants.add(plan.variant);
+      break;
+    }
+
+    if (matchingItems.length > 0 && plan.variant === "base") {
+      matchedVariants.add(plan.variant);
+      continue;
+    }
+  }
+
+  return {
+    items: Array.from(collected.values()),
+    variants: Array.from(matchedVariants),
   };
 }
 
 async function main() {
   getRequiredEnv("SUPABASE_URL");
   getRequiredEnv("SUPABASE_SERVICE_ROLE_KEY");
-  const actorId = getRequiredEnv("APIFY_COMPANY_JOBS_ACTOR_ID");
   getRequiredEnv("APIFY_API_TOKEN");
 
+  const actorId = resolveActorId();
   const onlyIds = process.env.APIFY_COMPANY_ONLY_IDS?.split(",").map((id) => id.trim()).filter(Boolean) ?? [];
   const forceOnlyIds = process.env.APIFY_FORCE_COMPANY_ONLY_IDS === "true";
   const supabase = createSupabaseAdminClient();
@@ -234,7 +380,7 @@ async function main() {
   const [{ data: companies, error: companiesError }, { data: existingRows, error: existingError }] = await Promise.all([
     supabase
       .from(COMPANY_RELATION)
-      .select("id, company_name, company_domain, company_website, company_linkedin_url")
+      .select("id, company_name, company_domain, company_website, company_linkedin_url, raw_company_json")
       .order("alumni_count", { ascending: false })
       .limit(1000),
     supabase.from(JOB_POSTINGS_RELATION).select("company_id"),
@@ -251,12 +397,15 @@ async function main() {
   const alreadyProcessedIds = new Set((existingRows ?? []).map((row) => String(row.company_id)));
   const candidates = ((companies ?? []) as CompanyRow[])
     .filter((company) => {
+      const companyIsEnriched = Boolean(company.company_linkedin_url?.trim() && company.raw_company_json);
+      if (!companyIsEnriched) return false;
+
       if (onlyIds.length > 0) {
         if (!onlyIds.includes(company.id)) return false;
-        return forceOnlyIds ? !!(company.company_website || company.company_domain || company.company_name) : !alreadyProcessedIds.has(company.id);
+        return forceOnlyIds ? true : !alreadyProcessedIds.has(company.id);
       }
-      const hasSeed = company.company_website || company.company_domain;
-      return hasSeed && !alreadyProcessedIds.has(company.id);
+
+      return !alreadyProcessedIds.has(company.id);
     })
     .slice(0, PAGE_SIZE);
 
@@ -265,51 +414,47 @@ async function main() {
     return;
   }
 
-  const actorInput = buildActorInput(candidates);
-  const run = await runActor(actorId, actorInput);
-  const datasetId = run.data?.defaultDatasetId;
+  const postings: PostingRow[] = [];
+  const companySummaries: Array<Record<string, unknown>> = [];
 
-  if (!datasetId) {
-    throw new Error("Apify run did not return a defaultDatasetId");
+  for (const company of candidates) {
+    const result = await fetchJobsForCompany(actorId, company);
+    const companyPostings = result.items
+      .map((item) => {
+        const normalized = normalizePosting(item);
+        if (!normalized.title) return null;
+
+        return {
+          company_id: company.id,
+          title: normalized.title,
+          department: normalized.department,
+          location: normalized.location,
+          employment_type: normalized.employmentType,
+          seniority_level: normalized.seniorityLevel,
+          is_internship: normalized.isInternship,
+          is_entry_level: normalized.isEntryLevel,
+          is_new_grad: normalized.isNewGrad,
+          apply_url: normalized.applyUrl,
+          posting_url: normalized.postingUrl,
+          source: APIFY_SOURCE,
+          source_job_id: normalized.sourceJobId,
+          posted_at: normalized.postedAt,
+          last_seen_at: new Date().toISOString(),
+          status: "active",
+          raw_job_json: item,
+          normalized_job_json: normalized,
+        };
+      })
+      .filter((posting): posting is PostingRow => posting !== null);
+
+    postings.push(...companyPostings);
+    companySummaries.push({
+      companyId: company.id,
+      companyName: company.company_name,
+      matchedJobs: companyPostings.length,
+      queryVariantsUsed: result.variants,
+    });
   }
-
-  const items = await fetchDatasetItems(datasetId);
-  const companyById = new Map(candidates.map((company) => [company.id, company]));
-  const companyByName = new Map(
-    candidates.map((company) => [(company.company_name ?? company.company_domain ?? company.id).toLowerCase(), company]),
-  );
-  const postings = items
-    .map((item) => {
-      const normalized = normalizePosting(item);
-      if (!normalized.title) return null;
-      const matchedCompany =
-        (item.company_id ? companyById.get(String(item.company_id)) : undefined) ??
-        (normalized.companyName ? companyByName.get(normalized.companyName.toLowerCase()) : undefined);
-
-      if (!matchedCompany) return null;
-
-      return {
-        company_id: matchedCompany.id,
-        title: normalized.title,
-        department: normalized.department,
-        location: normalized.location,
-        employment_type: normalized.employmentType,
-        seniority_level: normalized.seniorityLevel,
-        is_internship: normalized.isInternship,
-        is_entry_level: normalized.isEntryLevel,
-        is_new_grad: normalized.isNewGrad,
-        apply_url: normalized.applyUrl,
-        posting_url: normalized.postingUrl,
-        source: APIFY_SOURCE,
-        source_job_id: normalized.sourceJobId,
-        posted_at: normalized.postedAt,
-        last_seen_at: new Date().toISOString(),
-        status: "active",
-        raw_job_json: item,
-        normalized_job_json: normalized,
-      };
-    })
-    .filter(Boolean);
 
   if (postings.length > 0) {
     const { error: insertError } = await supabase
@@ -324,9 +469,9 @@ async function main() {
   console.log(
     JSON.stringify({
       companiesInRun: candidates.length,
-      datasetItems: items.length,
       storedPostings: postings.length,
       actorId,
+      companies: companySummaries,
     }),
   );
 }

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { normalizeAuthError, normalizeAuthRedirect } from "@/lib/auth";
+import { buildAuthVerifyPath, normalizeAuthError, normalizeAuthRedirect } from "@/lib/auth";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import type { AppRole } from "@/lib/supabase/types";
 
@@ -39,6 +39,7 @@ export function SignupForm() {
         event.preventDefault();
         const trimmedEmail = email.trim().toLowerCase();
         const next = normalizeAuthRedirect(searchParams.get("next"), "/dashboard");
+        const onboardingPath = `/onboarding?role=${role}&next=${encodeURIComponent(next)}`;
 
         if (!trimmedEmail) {
           setError("Enter your email address.");
@@ -63,7 +64,7 @@ export function SignupForm() {
           password,
           options: {
             data: { role },
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(`/onboarding?role=${role}&next=${encodeURIComponent(next)}`)}`,
+            emailRedirectTo: `${window.location.origin}${buildAuthVerifyPath(onboardingPath)}`,
           },
         });
 

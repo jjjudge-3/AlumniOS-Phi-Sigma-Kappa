@@ -288,6 +288,14 @@ async function main() {
   const existingIds = new Set((existingAnalysis ?? []).map((row) => String(row.company_id)));
   const candidates = ((companies ?? []) as CompanyRow[])
     .filter((company) => {
+      const companyIsEnriched = Boolean(
+        company.company_linkedin_url &&
+          company.company_linkedin_url.trim() &&
+          company.raw_company_json,
+      );
+
+      if (!companyIsEnriched) return false;
+
       if (forceAll) return true;
       if (onlyIds.length > 0) {
         if (!onlyIds.includes(company.id)) return false;

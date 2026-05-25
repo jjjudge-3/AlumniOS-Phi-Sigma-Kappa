@@ -11,7 +11,7 @@ export function SignOutButton() {
   return (
     <Button
       variant="ghost"
-      className="gap-2"
+      className="h-9 shrink-0 whitespace-nowrap px-2.5 text-sm"
       onClick={async () => {
         const supabase = createSupabaseBrowserClient();
         await supabase.auth.signOut();

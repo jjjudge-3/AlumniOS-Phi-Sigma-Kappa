@@ -6,6 +6,47 @@ export function normalizeAuthRedirect(target: string | null | undefined, fallbac
   return target;
 }
 
+export function normalizeAuthRedirectUrl(target: string | null | undefined, origin: string, fallback = "/dashboard") {
+  if (!target) {
+    return fallback;
+  }
+
+  try {
+    const url = new URL(target, origin);
+    if (url.origin !== origin) {
+      return fallback;
+    }
+
+    return normalizeAuthRedirect(`${url.pathname}${url.search}${url.hash}`, fallback);
+  } catch {
+    return normalizeAuthRedirect(target, fallback);
+  }
+}
+
+export function buildAuthConfirmPath(next: string) {
+  return `/auth/confirm?next=${encodeURIComponent(next)}`;
+}
+
+export function buildAuthVerifyPath(next: string) {
+  return `/auth/verify?next=${encodeURIComponent(next)}`;
+}
+
+export function buildLoginPath(options?: { next?: string | null; error?: string | null }) {
+  const params = new URLSearchParams();
+  const next = normalizeAuthRedirect(options?.next, "/dashboard");
+
+  if (next !== "/dashboard") {
+    params.set("next", next);
+  }
+
+  if (options?.error) {
+    params.set("error", options.error);
+  }
+
+  const query = params.toString();
+  return query ? `/login?${query}` : "/login";
+}
+
 export function normalizeAuthError(message: string) {
   const value = message.toLowerCase();
 
@@ -23,6 +64,15 @@ export function normalizeAuthError(message: string) {
 
   if (value.includes("email not confirmed")) {
     return "Confirm your email first, then sign in from the same browser.";
+  }
+
+  if (
+    value.includes("expired") ||
+    value.includes("otp_expired") ||
+    value.includes("email link is invalid") ||
+    value.includes("token has expired or is invalid")
+  ) {
+    return "That email confirmation link is no longer valid. Request a fresh confirmation email and open the newest link.";
   }
 
   return message;

@@ -1,7 +1,7 @@
 import { logger, task } from "@trigger.dev/sdk/v3";
 import { createSupabaseAdminClient } from "@/lib/supabase-admin";
 
-const ALUMNI_RELATION = "master alumni";
+const ALUMNI_RELATION_CANDIDATES = ["master alumni", "alumni"] as const;
 
 type AlumniSampleRow = {
   id: string | number | null;
@@ -269,14 +269,20 @@ function companyLogoUrlFromWebsite(companyWebsite: string | null) {
 
 async function getReadableAlumniRelation() {
   const supabase = createSupabaseAdminClient();
-  const relation = ALUMNI_RELATION;
-  const { error } = await supabase.from(relation).select("id").limit(1);
 
-  if (error) {
-    throw new Error(`Supabase alumni relation check failed for ${relation}: ${error.message}`);
+  for (const relation of ALUMNI_RELATION_CANDIDATES) {
+    const { error } = await supabase.from(relation).select("id").limit(1);
+
+    if (!error) {
+      return relation;
+    }
+
+    if (error.code !== "PGRST205" && !error.message.includes("does not exist")) {
+      throw new Error(`Supabase alumni relation check failed for ${relation}: ${error.message}`);
+    }
   }
 
-  return relation;
+  throw new Error(`No readable alumni relation found. Tried: ${ALUMNI_RELATION_CANDIDATES.join(", ")}`);
 }
 
 async function fetchAlumnusRowById(alumniId: string) {

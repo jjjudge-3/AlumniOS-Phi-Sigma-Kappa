@@ -2,7 +2,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { normalizeAlumniRow, normalizeAlumniRows } from "@/lib/supabase/normalize";
 
-const ALUMNI_RELATION = "master alumni";
+const ALUMNI_RELATION_CANDIDATES = ["master alumni", "alumni"] as const;
 
 function faviconUrlFromWebsite(value: string | null) {
   if (!value) return null;
@@ -43,10 +43,33 @@ async function fetchAlumniRows(relation: string) {
   return { data: (data ?? []) as Record<string, unknown>[], error: null };
 }
 
-export async function getAlumni() {
-  const result = await fetchAlumniRows(ALUMNI_RELATION);
+async function getReadableAlumniRelation() {
+  for (const relation of ALUMNI_RELATION_CANDIDATES) {
+    const result = await fetchAlumniRows(relation);
 
-  if (result.error && result.error.code !== "PGRST205") {
+    if (!result.error) {
+      return relation;
+    }
+
+    if (result.error.code !== "PGRST205" && !result.error.message.includes("does not exist")) {
+      throw new Error(result.error.message);
+    }
+  }
+
+  throw new Error(
+    `No readable alumni relation found. Tried: ${ALUMNI_RELATION_CANDIDATES.join(", ")}`,
+  );
+}
+
+export async function getActiveAlumniRelation() {
+  return getReadableAlumniRelation();
+}
+
+export async function getAlumni() {
+  const relation = await getReadableAlumniRelation();
+  const result = await fetchAlumniRows(relation);
+
+  if (result.error) {
     throw new Error(result.error.message);
   }
 
@@ -137,6 +160,26 @@ export async function getCurrentAlumniUserProfile(userId: string) {
     .maybeSingle();
 
   if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function getClaimRequestForProfile(profileId: string, alumniId: string) {
+  const supabase = createSupabaseAdminClient();
+  const { data, error } = await supabase
+    .from("alumni_claim_requests")
+    .select("*")
+    .eq("profile_id", profileId)
+    .eq("alumni_id", alumniId)
+    .maybeSingle();
+
+  if (error) {
+    if (error.code === "PGRST205" || error.message.includes("does not exist")) {
+      return null;
+    }
+
     throw new Error(error.message);
   }
 
@@ -234,6 +277,23 @@ function fallbackCompanyAlumni(
   });
 }
 
+function hasLinkedinEnrichment(row: Awaited<ReturnType<typeof getAlumni>>[number]) {
+  return Boolean(row.linkedin_url && row.enriched_person_json);
+}
+
+function uniqueAlumni(rows: Awaited<ReturnType<typeof getAlumni>>) {
+  const seen = new Set<string>();
+
+  return rows.filter((row) => {
+    if (seen.has(row.id)) {
+      return false;
+    }
+
+    seen.add(row.id);
+    return true;
+  });
+}
+
 function parsedRecruitingAnalysis(raw: unknown) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
   const record = raw as Record<string, unknown>;
@@ -277,11 +337,14 @@ export async function getCompanies() {
     const companyId = String(row.id);
     const companyName = (row.company_name as string | null) ?? "Independent";
     const companyDomain = normalizedCompanyDomain((row.company_domain as string | null) ?? (row.company_website as string | null));
-    const linkedRows =
+    const linkedRows = uniqueAlumni(
       (linkedIdsByCompany.get(companyId) ?? [])
         .map((id) => alumniById.get(id))
-        .filter(Boolean) as Awaited<ReturnType<typeof getAlumni>>;
-    const fallbackRows = linkedRows.length ? linkedRows : fallbackCompanyAlumni(alumni, companyName, companyDomain);
+        .filter((item): item is Awaited<ReturnType<typeof getAlumni>>[number] => Boolean(item)),
+    ).filter(hasLinkedinEnrichment);
+    const fallbackRows = linkedRows.length
+      ? linkedRows
+      : uniqueAlumni(fallbackCompanyAlumni(alumni, companyName, companyDomain)).filter(hasLinkedinEnrichment);
 
     return {
       id: companyId,
@@ -299,7 +362,7 @@ export async function getCompanies() {
         row.raw_company_json && typeof row.raw_company_json === "object" && !Array.isArray(row.raw_company_json)
           ? (row.raw_company_json as Record<string, unknown>)
           : null,
-      alumniCount: fallbackRows.length || Number(row.alumni_count ?? 0),
+      alumniCount: fallbackRows.length,
       alumni: fallbackRows.map((alumnus) => ({
         id: alumnus.id,
         fullName: alumnus.full_name,
@@ -310,7 +373,7 @@ export async function getCompanies() {
         linkedinUrl: alumnus.linkedin_url,
       })),
     };
-  });
+  }).filter((row) => row.alumniCount > 0);
 
   return rows.sort((a, b) => b.alumniCount - a.alumniCount || a.company.localeCompare(b.company));
 }

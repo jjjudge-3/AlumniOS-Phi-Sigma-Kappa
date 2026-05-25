@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { LayoutShell } from "@/components/layout-shell";
+import { isAdminEmail } from "@/lib/admin-helpers";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getCurrentProfile } from "@/lib/supabase/queries";
 
@@ -20,11 +21,12 @@ export default async function PlatformLayout({ children }: { children: React.Rea
   return (
     <LayoutShell
       profile={{
-        email: profile.email,
+        email: profile.email ?? user.email ?? null,
         firstName: profile.first_name,
         lastName: profile.last_name,
         role: profile.role,
       }}
+      isAdmin={isAdminEmail(user.email)}
     >
       {children}
     </LayoutShell>

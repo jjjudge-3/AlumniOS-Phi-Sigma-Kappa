@@ -1,16 +1,34 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Building2, Linkedin } from "lucide-react";
+import { ClaimAlumniButton } from "@/components/alumni/claim-alumni-button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { companyValueSummary, normalizeUrl, summarizeEnrichedPerson } from "@/lib/alumni";
-import { getAlumni, getAlumniById } from "@/lib/supabase/queries";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getAlumni, getAlumniById, getClaimRequestForProfile, getCurrentAlumniUserProfile, getCurrentProfile } from "@/lib/supabase/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function AlumniProfilePage({ params }: { params: { id: string } }) {
-  const [alumni, allAlumni] = await Promise.all([getAlumniById(params.id), getAlumni()]);
+  const authSupabase = createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await authSupabase.auth.getUser();
+
+  const [alumni, allAlumni, viewerProfile] = await Promise.all([
+    getAlumniById(params.id),
+    getAlumni(),
+    user ? getCurrentProfile(user.id) : Promise.resolve(null),
+  ]);
   if (!alumni) notFound();
+
+  const [viewerAlumniProfile, existingClaimRequest] = viewerProfile
+    ? await Promise.all([
+        viewerProfile.role === "alumni" ? getCurrentAlumniUserProfile(viewerProfile.id) : Promise.resolve(null),
+        getClaimRequestForProfile(viewerProfile.id, params.id),
+      ])
+    : [null, null];
 
   const alumniAtCompanyCount = allAlumni.filter((row) => row.company_name === alumni.company_name).length;
   const whyValuable = companyValueSummary({
@@ -25,6 +43,25 @@ export default async function AlumniProfilePage({ params }: { params: { id: stri
   const linkedinUrl = normalizeUrl(alumni.linkedin_url);
   const companyLinkedinUrl = normalizeUrl(alumni.company_linkedin_url);
   const companyWebsite = normalizeUrl(alumni.company_website);
+  const canClaim = Boolean(
+    viewerProfile?.role === "alumni" &&
+      alumni.linkedin_url &&
+      alumni.enriched_person_json &&
+      !viewerAlumniProfile?.claimed_alumni_id &&
+      existingClaimRequest?.status !== "pending" &&
+      existingClaimRequest?.status !== "approved",
+  );
+
+  const claimMessage =
+    existingClaimRequest?.status === "pending"
+      ? "Your claim request is pending admin review."
+      : existingClaimRequest?.status === "approved"
+        ? "This alumni profile has already been approved for your account."
+        : existingClaimRequest?.status === "rejected"
+          ? "A previous claim request was rejected. You can submit another request."
+          : viewerAlumniProfile?.claimed_alumni_id
+            ? "Your account already has an approved alumni profile claim."
+            : null;
 
   return (
     <div className="space-y-4">
@@ -120,6 +157,22 @@ export default async function AlumniProfilePage({ params }: { params: { id: stri
         </CardContent>
       </Card>
 
+      {viewerProfile?.role === "alumni" ? (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base tracking-normal">Claim this alumni profile</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ClaimAlumniButton
+              alumniId={params.id}
+              disabled={!canClaim}
+              initialMessage={claimMessage && !canClaim && existingClaimRequest?.status !== "rejected" ? claimMessage : null}
+              initialError={claimMessage && !canClaim && existingClaimRequest?.status === "rejected" ? claimMessage : null}
+            />
+          </CardContent>
+        </Card>
+      ) : null}
+
       <Card>
         <CardHeader>
           <CardTitle className="text-base tracking-normal">Why this company is valuable for active brothers</CardTitle>
@@ -137,23 +190,6 @@ export default async function AlumniProfilePage({ params }: { params: { id: stri
           <div className="whitespace-pre-wrap text-sm leading-7 text-slate-700">
             {enrichedSummary ?? "No enriched summary is available yet for this alumnus."}
           </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base tracking-normal">Raw LinkedIn JSON</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {alumni.enriched_person_json ? (
-            <pre className="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700">
-              {JSON.stringify(alumni.enriched_person_json, null, 2)}
-            </pre>
-          ) : (
-            <p className="text-sm leading-7 text-slate-600">
-              No Bright Data LinkedIn JSON is available yet for this alumnus.
-            </p>
-          )}
         </CardContent>
       </Card>
     </div>

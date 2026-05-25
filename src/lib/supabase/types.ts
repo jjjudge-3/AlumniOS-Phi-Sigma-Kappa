@@ -76,5 +76,8 @@ export type AlumniUserProfileRow = {
   graduation_year: number | null;
   company_name: string | null;
   job_title: string | null;
+  claimed_alumni_id?: string | null;
+  claimed_alumni_relation?: string | null;
+  claim_approved_at?: string | null;
   created_at: string;
 };

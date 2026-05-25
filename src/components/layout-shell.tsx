@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, BriefcaseBusiness, Building2, Compass, LayoutDashboard, MapPinned, Settings, ShieldCheck, Users } from "lucide-react";
+import { BarChart3, BriefcaseBusiness, Building2, Compass, LayoutDashboard, Settings, ShieldCheck, Users } from "lucide-react";
 import { SignOutButton } from "@/components/auth/sign-out-button";
 import { cn } from "@/lib/utils";
 
@@ -13,12 +13,12 @@ const nav = [
   { href: "/companies", label: "Companies", icon: BriefcaseBusiness },
   { href: "/internships-jobs", label: "Internships/Jobs", icon: BriefcaseBusiness },
   { href: "/industry", label: "Industry", icon: BarChart3 },
-  { href: "/locations", label: "Locations", icon: MapPinned },
 ];
 
 export function LayoutShell({
   children,
   profile,
+  isAdmin = false,
 }: {
   children: React.ReactNode;
   profile?: {
@@ -27,9 +27,11 @@ export function LayoutShell({
     email: string | null;
     role: string | null;
   } | null;
+  isAdmin?: boolean;
 }) {
   const pathname = usePathname();
   const initials = `${profile?.firstName?.[0] ?? "A"}${profile?.lastName?.[0] ?? "O"}`.toUpperCase();
+  const navItems = isAdmin ? [...nav, { href: "/admin", label: "Admin", icon: ShieldCheck }] : nav;
 
   return (
     <div className="h-screen overflow-hidden text-slate-900">
@@ -48,7 +50,7 @@ export function LayoutShell({
           </div>
 
           <nav className="flex-1 space-y-1 overflow-y-auto px-4 py-5">
-            {nav.map((item) => {
+            {navItems.map((item) => {
               const Icon = item.icon;
               const active = pathname.startsWith(item.href);
 
@@ -85,8 +87,8 @@ export function LayoutShell({
                 </div>
               </div>
             </div>
-            <div className="mt-3 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2">
-              <div className="text-xs text-slate-500">
+            <div className="mt-3 flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2">
+              <div className="min-w-0 flex-1 text-xs text-slate-500">
                 Signed in as
                 <div className="truncate text-sm font-medium text-slate-950">
                   {profile?.email ?? "No email"}

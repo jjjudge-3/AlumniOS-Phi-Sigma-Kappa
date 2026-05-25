@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "check:integrations": "tsx scripts/check-integrations.ts",
     "seed": "tsx prisma/seed.ts",
     "prisma:generate": "prisma generate",
     "supabase:import-alumni": "tsx scripts/import-alumni-to-supabase.ts",

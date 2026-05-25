@@ -1,17 +1,27 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { buildLoginPath, normalizeAuthRedirect } from "@/lib/auth";
+import type { EmailOtpType } from "@supabase/supabase-js";
+import { buildLoginPath, normalizeAuthRedirect, normalizeAuthRedirectUrl } from "@/lib/auth";
+
+function redirectToLogin(request: NextRequest, message: string, next?: string) {
+  const loginUrl = new URL(buildLoginPath({ error: message, next }), request.url);
+  return NextResponse.redirect(loginUrl);
+}
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
+  const tokenHash = requestUrl.searchParams.get("token_hash");
+  const type = requestUrl.searchParams.get("type") as EmailOtpType | null;
+  const redirectToParam = requestUrl.searchParams.get("redirect_to");
   const errorDescription = requestUrl.searchParams.get("error_description");
-  const next = normalizeAuthRedirect(requestUrl.searchParams.get("next"), "/dashboard");
+  const next = redirectToParam
+    ? normalizeAuthRedirectUrl(redirectToParam, requestUrl.origin, "/dashboard")
+    : normalizeAuthRedirect(requestUrl.searchParams.get("next"), "/dashboard");
 
   if (errorDescription) {
-    const loginUrl = new URL(buildLoginPath({ error: errorDescription, next }), request.url);
-    return NextResponse.redirect(loginUrl);
+    return redirectToLogin(request, errorDescription, next);
   }
 
   const response = NextResponse.redirect(new URL(next, request.url));
@@ -37,13 +47,27 @@ export async function GET(request: NextRequest) {
     },
   );
 
+  if (tokenHash && type) {
+    const { error } = await supabase.auth.verifyOtp({
+      token_hash: tokenHash,
+      type,
+    });
+
+    if (error) {
+      return redirectToLogin(request, error.message, next);
+    }
+
+    return response;
+  }
+
   if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (error) {
-      const loginUrl = new URL(buildLoginPath({ error: error.message, next }), request.url);
-      return NextResponse.redirect(loginUrl);
+      return redirectToLogin(request, error.message, next);
     }
+
+    return response;
   }
 
-  return response;
+  return redirectToLogin(request, "Missing email confirmation token.", next);
 }
